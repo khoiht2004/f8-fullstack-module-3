@@ -7,6 +7,7 @@ import { useLoginMutation } from "@/services/Auth/loginApi";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/slices/authSlice";
 import { setTokens } from "@/utils/auth";
+import { useLazyGetUserInfoQuery } from "@/services/Auth/userApi";
 
 function LoginPage() {
   document.title = "Thread - Đăng nhập";
@@ -14,6 +15,7 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const [login, { isLoading, error }] = useLoginMutation();
+  const [getUserInfo] = useLazyGetUserInfoQuery();
 
   const inputStyles =
     "text-semibold h-auto border-transparent focus:border focus:border-[#77777790] bg-[#1E1E1E] p-4 text-white";
@@ -61,13 +63,29 @@ function LoginPage() {
         // Lưu tokens vào localStorage
         setTokens(access_token, refresh_token);
 
-        // Lưu user info vào Redux
-        dispatch(
-          setCredentials({
-            user,
-            accessToken: access_token,
-          }),
-        );
+        // Gọi API Get User Info để lấy thông tin đầy đủ
+        try {
+          const userInfoResponse = await getUserInfo().unwrap();
+
+          if (userInfoResponse.success) {
+            // Lưu user info vào Redux
+            dispatch(
+              setCredentials({
+                user: userInfoResponse.data,
+                accessToken: access_token,
+              }),
+            );
+          }
+        } catch (userInfoError) {
+          console.error("Error: ", userInfoError);
+          // Nếu không lấy được user info, dùng user từ login response
+          dispatch(
+            setCredentials({
+              user,
+              accessToken: access_token,
+            }),
+          );
+        }
 
         // Redirect về trang home
         navigate("/");

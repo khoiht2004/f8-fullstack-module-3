@@ -1,6 +1,5 @@
 import { Instagram } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
-import Header from "./Header";
 import { Button } from "./ui/button";
 
 function LoginPanel() {
