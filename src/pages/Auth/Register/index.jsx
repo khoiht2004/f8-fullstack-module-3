@@ -1,88 +1,86 @@
+/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronRight, Instagram, Eye, EyeOff } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "@/store/slices/authSlice";
-import { setTokens } from "@/utils/auth";
 import { useRegisterMutation } from "@/services/Auth/registerApi";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/lib/validation/auth";
 
 function RegisterPage() {
-  document.title = "Thread - Đăng nhập";
+  document.title = "Thread - Đăng ký";
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [register, { isLoading, error }] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const inputStyles =
     "text-semibold h-auto border-transparent focus:border focus:border-[#77777790] bg-[#1E1E1E] p-4 text-white";
   const text = "text-[15px] text-[#777777]";
   const hoverFooter = "transition hover:underline";
 
-  const [isFormValid, setIsFormValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const [apiError, setApiError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  // React Hook Form với Zod validation
+  const {
+    register: registerField,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
   });
-
-  useEffect(() => {
-    const isValid =
-      formData.username.trim() !== "" &&
-      formData.password.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.confirmPassword.trim() !== "";
-    setIsFormValid(isValid);
-  }, [formData]);
-
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!isFormValid) return;
+  const onSubmit = async (data) => {
+    setApiError(null);
+    setSuccessMessage(null);
 
     try {
       const response = await register({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
       }).unwrap();
 
       if (response.success) {
-        const { user, access_token, refresh_token } = response.data;
-
-        // Lưu tokens vào localStorage
-        setTokens(access_token, refresh_token);
-
-        // Lưu user info vào Redux
-        dispatch(
-          setCredentials({
-            user,
-            accessToken: access_token,
-          }),
+        // Hiển thị message thành công
+        setSuccessMessage(
+          "Chúng tôi đã gửi một liên kết xác thực tới email của bạn. Vui lòng kiểm tra email để xác thực tài khoản.",
         );
 
-        // Redirect về trang home
-        navigate("/");
+        // Clear form sau 2 giây và chuyển về home
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       }
     } catch (err) {
-      console.error("Login failed:", err);
+      console.error("Register failed:", err);
+      const error = err.response?.data?.errors;
+      const message = Object.values(error)[0];
+      setApiError(message[0] || "Đăng ký thất bại. Vui lòng thử lại!");
     }
   };
+
+  // Debounce validation messages (600-800ms)
+  const [debouncedErrors, setDebouncedErrors] = useState({});
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedErrors(errors);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [errors]);
 
   return (
     <div className="flex h-dvh w-dvw items-center justify-center bg-[#101010]">
@@ -91,42 +89,58 @@ function RegisterPage() {
           Đăng ký tài khoản mới
         </h1>
 
-        {/* Form đăng nhập */}
-        <form onSubmit={handleSubmit} className="w-full">
-          <Input
-            type="text"
-            value={formData.username}
-            onChange={(e) => handleInputChange("username", e.target.value)}
-            className={`${inputStyles} mb-2`}
-            placeholder="Tên người dùng, số điện thoại"
-            disabled={isLoading}
-          />
+        {/* Form đăng ký */}
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+          {/* Username */}
+          <div className="mb-2">
+            <Input
+              type="text"
+              {...registerField("username")}
+              className={`${inputStyles} ${debouncedErrors.username ? "border-red-500" : ""}`}
+              placeholder="Tên hiển thị"
+              disabled={isLoading}
+            />
+            {debouncedErrors.username && (
+              <p className="mt-1 text-xs text-red-500">
+                {debouncedErrors.username.message}
+              </p>
+            )}
+          </div>
 
-          <Input
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
-            className={`${inputStyles}`}
-            placeholder="Email"
-            disabled={isLoading}
-          />
+          {/* Email */}
+          <div className="mb-2">
+            <Input
+              type="email"
+              {...registerField("email")}
+              className={`${inputStyles} ${debouncedErrors.email ? "border-red-500" : ""}`}
+              placeholder="Email"
+              disabled={isLoading}
+            />
+            {debouncedErrors.email && (
+              <p className="mt-1 text-xs text-red-500">
+                {debouncedErrors.email.message}
+              </p>
+            )}
+          </div>
 
-          {/* Hide/Show password*/}
-          <div className="relative my-2">
+          {/* Password */}
+          <div className="relative mb-2">
             <Input
               type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              className={`${inputStyles} pr-12`}
+              {...registerField("password")}
+              className={`${inputStyles} pr-12 ${debouncedErrors.password ? "border-red-500" : ""}`}
               placeholder="Mật khẩu"
               disabled={isLoading}
-              onCopy={(e) => e.preventDefault()} // Không cho phép copy
+              onCopy={(e) => e.preventDefault()}
+              onCut={(e) => e.preventDefault()}
+              onPaste={(e) => e.preventDefault()}
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
               className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-[#777777] transition-colors hover:text-white"
               disabled={isLoading}
+              tabIndex={-1} // Khi người dùng ấn tab sẽ k trỏ vào icon này
             >
               {showPassword ? (
                 <EyeOff className="size-5" />
@@ -134,30 +148,48 @@ function RegisterPage() {
                 <Eye className="size-5" />
               )}
             </button>
+            {debouncedErrors.password && (
+              <p className="mt-1 text-xs text-red-500">
+                {debouncedErrors.password.message}
+              </p>
+            )}
           </div>
 
-          <Input
-            type="password"
-            value={formData.confirmPassword}
-            onChange={(e) =>
-              handleInputChange("confirmPassword", e.target.value)
-            }
-            className={`${inputStyles} mb-2`}
-            placeholder="Nhập lại mật khẩu"
-            disabled={isLoading}
-            onCopy={(e) => e.preventDefault()} // Không cho phép copy
-          />
+          {/* Confirm Password */}
+          <div className="mb-2">
+            <Input
+              type="password"
+              {...registerField("confirmPassword")}
+              className={`${inputStyles} ${debouncedErrors.confirmPassword ? "border-red-500" : ""}`}
+              placeholder="Xác nhận mật khẩu"
+              disabled={isLoading}
+              onCopy={(e) => e.preventDefault()}
+              onCut={(e) => e.preventDefault()}
+              onPaste={(e) => e.preventDefault()}
+            />
+            {debouncedErrors.confirmPassword && (
+              <p className="mt-1 text-xs text-red-500">
+                {debouncedErrors.confirmPassword.message}
+              </p>
+            )}
+          </div>
 
-          {error && (
-            <p className="my-2 text-sm font-medium text-red-500">
-              {error.data?.message || "Đăng nhập thất bại. Vui lòng thử lại!"}
-            </p>
+          {/* API Error */}
+          {apiError && (
+            <p className="my-2 text-sm font-medium text-red-500">{apiError}</p>
+          )}
+
+          {/* Success Message */}
+          {successMessage && (
+            <div className="my-2 rounded-md border border-green-500/30 bg-green-500/10 p-3">
+              <p className="text-sm text-green-500">{successMessage}</p>
+            </div>
           )}
 
           <Button
             type="submit"
             className="h-auto w-full cursor-pointer bg-white p-4 text-[16px] text-black hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
-            disabled={!isFormValid || isLoading}
+            disabled={!isValid || isLoading}
           >
             {isLoading ? "Đang đăng ký..." : "Đăng ký"}
           </Button>
@@ -210,8 +242,6 @@ function RegisterPage() {
           </div>
         </div>
       </footer>
-
-      {/* QR */}
     </div>
   );
 }
