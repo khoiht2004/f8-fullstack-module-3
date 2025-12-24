@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { ChevronRight, Instagram, Eye, EyeOff } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "@/services/Auth/registerApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +12,6 @@ import { registerSchema } from "@/lib/validation/auth";
 function RegisterPage() {
   document.title = "Thread - Đăng ký";
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
   const [register, { isLoading }] = useRegisterMutation();
 
@@ -79,6 +77,7 @@ function RegisterPage() {
       setDebouncedErrors(errors);
     }, 700);
 
+    // Clean up
     return () => clearTimeout(timer);
   }, [errors]);
 

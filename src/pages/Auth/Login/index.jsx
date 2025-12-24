@@ -111,6 +111,7 @@ function LoginPage() {
               onClick={togglePasswordVisibility}
               className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-[#777777] transition-colors hover:text-white"
               disabled={isLoading}
+              tabIndex={-1}
             >
               {showPassword ? (
                 <EyeOff className="size-5" />
