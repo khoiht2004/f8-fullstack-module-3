@@ -6,6 +6,7 @@ import HomePage from "./pages/Home";
 import SearchPage from "./pages/Search";
 import ActivityPage from "./pages/Activity";
 import RegisterPage from "./pages/Auth/Register";
+import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           {/* No Layout */}
           <Route path={paths.login} element={<LoginPage />} />
           <Route path={paths.register} element={<RegisterPage />} />
+          <Route path={paths.forgotPassword} element={<ForgotPasswordPage />} />
 
           {/* Default Layout pages */}
           <Route element={<DefaultLayout />}>

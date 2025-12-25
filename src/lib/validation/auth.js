@@ -28,3 +28,10 @@ export const registerSchema = z
         message: "Mật khẩu xác nhận không khớp",
         path: ["confirmPassword"],
     });
+
+export const forgotPasswordSchema = z.object({
+    email: z
+        .string()
+        .min(1, "Email không được để trống")
+        .email("Email không hợp lệ"),
+});

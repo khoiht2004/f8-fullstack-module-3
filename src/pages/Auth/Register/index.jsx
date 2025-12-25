@@ -58,7 +58,7 @@ function RegisterPage() {
         // Clear form sau 2 giây và chuyển về home
         setTimeout(() => {
           navigate("/");
-        }, 3000);
+        }, 2000);
       }
     } catch (err) {
       console.error("Register failed:", err);

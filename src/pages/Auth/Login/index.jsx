@@ -154,7 +154,7 @@ function LoginPage() {
           </Button>
         </form>
 
-        <NavLink to="/reset-password" className={`${text} mt-4`}>
+        <NavLink to="/forgot-password" className={`${text} mt-4`}>
           Quên mật khẩu?
         </NavLink>
 

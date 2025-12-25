@@ -1,7 +1,10 @@
 const paths = {
-    homePage: "/",
+    // Auth
     login: "/login",
     register: "/register",
+    forgotPassword: "/forgot-password",
+    // Pages
+    homePage: "/",
     searchPage: "/search",
     activityPage: "/activity",
     profilePage: "/profile-page",
