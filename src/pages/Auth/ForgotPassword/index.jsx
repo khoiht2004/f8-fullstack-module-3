@@ -57,7 +57,7 @@ function ForgotPasswordPage() {
     <div className="flex h-dvh w-dvw items-center justify-center bg-[#101010]">
       <main className="flex h-full w-92.5 flex-col items-center justify-center">
         <h1 className="mb-4 text-[16px] font-bold text-[#F3F5F7]">
-          Đặt lại mật khẩu
+          Gửi liên kết đến Email:
         </h1>
 
         {/* Form forgot password */}
@@ -95,7 +95,7 @@ function ForgotPasswordPage() {
             className="h-auto w-full cursor-pointer bg-white p-4 text-[16px] text-black hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             disabled={!isValid || isLoading}
           >
-            {isLoading ? "Đang gửi liên kết..." : "Đặt lại mật khẩu"}
+            {isLoading ? "Đang gửi liên kết..." : "Gửi liên kết"}
           </Button>
         </form>
 

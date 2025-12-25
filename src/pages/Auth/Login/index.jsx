@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronRight, Instagram, Eye, EyeOff } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "@/services/Auth/loginApi";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,8 @@ function LoginPage() {
   document.title = "Thread - Đăng nhập";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const stateMessage = location.state?.message;
 
   const [login, { isLoading, error }] = useLoginMutation();
   const [getUserInfo] = useLazyGetUserInfoQuery();
@@ -104,6 +106,13 @@ function LoginPage() {
 
         {/* Form đăng nhập */}
         <form onSubmit={handleSubmit} className="w-full">
+          {/* Hiển thị message từ reset password */}
+          {stateMessage && (
+            <div className="mb-2 rounded-md border border-green-500/30 bg-green-500/10 p-3">
+              <p className="text-sm text-green-500">{stateMessage}</p>
+            </div>
+          )}
+          {/* Input */}
           <Input
             type="text"
             value={formData.username}

@@ -7,6 +7,7 @@ import SearchPage from "./pages/Search";
 import ActivityPage from "./pages/Activity";
 import RegisterPage from "./pages/Auth/Register";
 import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
+import ResetPasswordPage from "./pages/Auth/ResetPassword";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path={paths.login} element={<LoginPage />} />
           <Route path={paths.register} element={<RegisterPage />} />
           <Route path={paths.forgotPassword} element={<ForgotPasswordPage />} />
+          <Route path={paths.resetPassword} element={<ResetPasswordPage />} />
 
           {/* Default Layout pages */}
           <Route element={<DefaultLayout />}>

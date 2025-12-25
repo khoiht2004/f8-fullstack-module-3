@@ -51,13 +51,11 @@ function RegisterPage() {
 
       if (response.success) {
         // Hiển thị message thành công
-        setSuccessMessage(
-          "Chúng tôi đã gửi một liên kết xác thực tới email của bạn. Vui lòng kiểm tra email để xác thực tài khoản.",
-        );
+        setSuccessMessage("Đăng ký tài khoản thành công");
 
-        // Clear form sau 2 giây và chuyển về home
+        // Clear form sau 2 giây và chuyển về login
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
         }, 2000);
       }
     } catch (err) {
