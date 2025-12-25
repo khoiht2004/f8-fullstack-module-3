@@ -5,12 +5,28 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { logout } from "@/store/slices/authSlice";
+import { clearTokens } from "@/utils/auth";
 import { ChevronRight } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 const itemStyles =
   "flex w-full cursor-pointer justify-between px-3 py-3.5 text-[16px] hover:bg-[rgba(255,255,255,0.04)] ";
 
 export default function NavMenu({ children }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear tokens
+    clearTokens();
+    // Clear Redux state
+    dispatch(logout());
+    // Chuyển hướng về trang login
+    navigate("/login");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
@@ -49,7 +65,10 @@ export default function NavMenu({ children }) {
         <DropdownMenuItem className={`${itemStyles}`}>
           Báo cạo sự cố
         </DropdownMenuItem>
-        <DropdownMenuItem className={`${itemStyles} text-red-500`}>
+        <DropdownMenuItem
+          className={`${itemStyles} text-red-500`}
+          onClick={handleLogout}
+        >
           Đăng xuất
         </DropdownMenuItem>
       </DropdownMenuContent>
