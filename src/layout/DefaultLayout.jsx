@@ -18,6 +18,7 @@ import { useLazyGetUserInfoQuery } from "@/services/Auth/userApi";
 import { useEffect } from "react";
 import { getAccessToken } from "@/utils/auth";
 import { setCredentials } from "@/store/slices/authSlice";
+import Snowfall from "react-snowfall";
 
 function DefaultLayout() {
   const dispatch = useDispatch();
@@ -56,9 +57,10 @@ function DefaultLayout() {
   return (
     <>
       <div className="w-full bg-black px-5">
+        {/* <Snowfall color="#dee4fd" /> */}
         <Navigation />
-        <main className="mx-auto flex h-dvh justify-center gap-2.5 text-white">
-          <div className="flex w-159.5 flex-col items-center">
+        <main className="mx-auto flex h-dvh justify-center gap-3 text-white">
+          <div className="flex w-full max-w-160 flex-col items-center">
             <Outlet />
           </div>
           {/* Chỉ hiển thị LoginPanel khi CHƯA đăng nhập */}

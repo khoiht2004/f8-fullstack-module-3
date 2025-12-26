@@ -17,7 +17,7 @@ function LoginPanel() {
         Đăng nhập
       </Button>
       {/* Panel */}
-      <div className="flex flex-col max-xl:hidden">
+      <div className="z-1 flex flex-col max-xl:hidden">
         <main className="mt-15 w-[337.6px] rounded-3xl border border-[#77777790] bg-[#181818] px-6 pt-8 pb-7 text-center">
           <h1 className="text-xl font-bold text-[#F3F5F7]">
             Đăng nhập hoặc đăng ký Threads

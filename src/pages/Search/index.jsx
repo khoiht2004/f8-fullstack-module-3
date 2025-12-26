@@ -1,11 +1,11 @@
+import Header from "@/components/Header";
 import PostSlide from "@/components/Posts/PostSlide";
 
 function SearchPage() {
   return (
     <>
-      <PostSlide title="Tìm kiếm">
-        {/* Lấy ra những người dùng khác để theo dõi */}
-      </PostSlide>
+      <Header title="Tìm kiếm" />
+      <PostSlide>{/* Lấy ra những người dùng khác để theo dõi */}</PostSlide>
     </>
   );
 }

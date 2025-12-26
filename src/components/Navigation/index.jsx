@@ -55,7 +55,7 @@ function Navigation() {
   return (
     <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2 text-white">
       {/* Logo */}
-      <section className="max-h-16 max-w-16">
+      <section className="size-15">
         <NavLink
           to="/"
           className="mt-4 mb-6 flex justify-center hover:scale-[1.05]"

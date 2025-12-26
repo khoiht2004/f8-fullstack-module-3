@@ -18,9 +18,12 @@ const baseQuery = async (args) => {
         };
     }
 
-    // Kiểm tra nếu có body, header, truyền vào config
     if (isObj) {
+        // Xử lý params
+        if (args.params) config.params = args.params;
+        // Xử lý body
         if (args.body) config.data = args.body;
+        // Xử lý headers tùy chỉnh
         if (args.headers) config.headers = { ...config.headers, ...args.headers };
     }
 
