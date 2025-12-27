@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 const itemStyles =
   "flex w-full cursor-pointer justify-between px-3 py-3.5 text-[16px] hover:bg-[rgba(255,255,255,0.04)] ";
 
-export default function NavMenu({ children }) {
+export default function NavMenu({ children, onClick }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,12 +35,7 @@ export default function NavMenu({ children }) {
         align="end"
         className="ml-4 w-60 overflow-hidden rounded-2xl bg-[#262626] p-2 font-medium text-white"
       >
-        <DropdownMenuItem
-          className={`${itemStyles}`}
-          onClick={() => {
-            /** Dùng để mở ThemeModal */
-          }}
-        >
+        <DropdownMenuItem className={`${itemStyles}`} onClick={onClick}>
           Giao diện
           <ChevronRight className="size-5.5" />
         </DropdownMenuItem>

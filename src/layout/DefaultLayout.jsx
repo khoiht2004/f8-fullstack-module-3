@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { getAccessToken } from "@/utils/auth";
 import { setCredentials } from "@/store/slices/authSlice";
 import Snowfall from "react-snowfall";
+import ThemeModal from "@/components/Theme/ThemeModal";
 
 function DefaultLayout() {
   const dispatch = useDispatch();

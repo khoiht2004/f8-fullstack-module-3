@@ -12,6 +12,8 @@ library.add(fas, far, fab);
 import { NavLink } from "react-router";
 import paths from "@/configs/path";
 import NavMenu from "./NavMenu";
+import { useState } from "react";
+import ThemeModal from "../Theme/ThemeModal";
 
 const styles = {
   link: {
@@ -52,6 +54,17 @@ const items = [
 ];
 
 function Navigation() {
+  const [themeModalOpen, setThemeModalOpen] = useState(false);
+
+  /** Dùng để mở ThemeModal */
+  const handleOpenThemeModal = () => {
+    setThemeModalOpen(true);
+  };
+
+  const handleCloseThemeModal = () => {
+    setThemeModalOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2 text-white">
       {/* Logo */}
@@ -93,14 +106,15 @@ function Navigation() {
       </section>
 
       {/* Menu */}
-      <section className="text-center">
-        <NavMenu>
+      <section className="relative text-center">
+        <NavMenu onClick={handleOpenThemeModal}>
           <FontAwesomeIcon
             icon={["fas", "bars"]}
             style={styles.link}
             className="mb-5 text-[#FFFFFF40] transition ease-in hover:text-white"
           />
         </NavMenu>
+        {themeModalOpen && <ThemeModal onClick={handleCloseThemeModal} />}
       </section>
     </nav>
   );
