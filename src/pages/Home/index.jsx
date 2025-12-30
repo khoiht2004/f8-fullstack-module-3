@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import PostSlide from "@/components/Posts/PostSlide";
 import PostCard from "@/components/Posts/PostCard";
 import { useGetFeedQuery } from "@/services/Home/postApi";
-import { useState } from "react";
 import { useGetUserInfoQuery } from "@/services/Auth/userApi";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -10,10 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import PostLoadingSkeleton from "@/components/Posts/PostLoadingSkeleton";
 
 function HomePage() {
-  const [feedType, setFeedType] = useState("for_you");
   const { currentData } = useGetUserInfoQuery();
   const { data, isLoading } = useGetFeedQuery({
-    type: feedType,
+    type: "for_you",
     page: 1,
     per_page: 40,
   });
@@ -25,11 +23,14 @@ function HomePage() {
       <Header title="Dành cho bạn" />
       <PostSlide>
         <div className="flex items-center px-6 py-4">
-          <Avatar className={`size-9`}>
+          <Avatar className="size-9">
             <AvatarImage
-              src={`${currentData?.data.avatar_url || "../../../public/img/placeholder_avatar.jpg"}`}
+              src={
+                currentData?.data.avatar_url ||
+                "../../../public/img/placeholder_avatar.jpg"
+              }
               alt={`Ảnh đại diện của ${currentData?.data.name}`}
-              className={`size-full object-cover`}
+              className="size-full object-cover"
             />
           </Avatar>
           <p
@@ -45,11 +46,11 @@ function HomePage() {
           </Button>
         </div>
 
-        <Separator className={`bg-(--outline-primary)`} />
+        <Separator className="bg-(--outline-primary)" />
 
         <div>
           {isLoading ? (
-            <PostLoadingSkeleton />
+            <PostLoadingSkeleton count={7} />
           ) : (
             data?.data?.map((post) => (
               <div key={post.id}>
