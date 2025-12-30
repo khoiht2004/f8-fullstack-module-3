@@ -1,1877 +1,1883 @@
-{
-    "v": 11,
-    "id": "cmib6ziab00ftpf1dyjfynm54",
-    "name": "F8 Threads API",
-    "folders": [
-        {
-            "v": 11,
-            "id": "cmib6ziae00fupf1d85eqyowc",
-            "name": "Authentication",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Register",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/register",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
+[
+    {
+        "v": 11,
+        "id": "cmib6ziab00ftpf1dyjfynm54",
+        "name": "F8 Threads API",
+        "folders": [
+            {
+                "v": 11,
+                "id": "cmib6ziae00fupf1d85eqyowc",
+                "name": "Authentication",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "17",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
                         },
-                        {
-                            "key": "x-origin",
-                            "value": "<<origin>>",
-                            "active": true,
-                            "description": "Frontend origin URL for email verification link"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "const responseData = hopp.response.body.asJSON();\n\nconst ACCESS_TOKEN_VAR = \"access_token\";\nconst REFRESH_TOKEN_VAR = \"refresh_token\";\n\nfunction extractAndSetTokens(data) {\n    let tokenFound = false;\n\n    // 1. Kiểm tra và lưu ACCESS TOKEN\n    if (data && data.access_token) {\n        hopp.env.active.set(ACCESS_TOKEN_VAR, data.access_token);\n        console.log(`Access Token đã được lưu: ${data.access_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    // 2. Kiểm tra và lưu REFRESH TOKEN (nếu có)\n    if (data && data.refresh_token) {\n        hopp.env.active.set(REFRESH_TOKEN_VAR, data.refresh_token);\n        console.log(`Refresh Token đã được lưu: ${data.refresh_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    return tokenFound;\n}\n\n\n// A. Trích xuất từ responseData trực tiếp (ví dụ: {\"access_token\": \"...\", \"refresh_token\": \"...\"})\nlet found = extractAndSetTokens(responseData);\n\n// B. Trích xuất từ đối tượng 'data' lồng ghép (ví dụ: {\"data\": {\"access_token\": \"...\", \"refresh_token\": \"...\"}})\nif (!found && responseData && responseData.data) {\n    found = extractAndSetTokens(responseData.data);\n}\n\nif (found) {\n    // Tùy chọn: Thêm test để xác nhận response thành công (Status 2xx)\n    hopp.test(\"Login successful (Status 2xx)\", () => {\n        hopp.expect(hopp.response.statusCode).toBeLevel2xx();\n    });\n}\nelse {\n    console.error(\"Không tìm thấy 'access_token' hoặc 'refresh_token' trong response body.\");\n}",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"username\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"password_confirmation\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Login",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/login",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "const responseData = hopp.response.body.asJSON();\n\nconst ACCESS_TOKEN_VAR = \"access_token\";\nconst REFRESH_TOKEN_VAR = \"refresh_token\";\n\nfunction extractAndSetTokens(data) {\n    let tokenFound = false;\n\n    // 1. Kiểm tra và lưu ACCESS TOKEN\n    if (data && data.access_token) {\n        hopp.env.active.set(ACCESS_TOKEN_VAR, data.access_token);\n        console.log(`Access Token đã được lưu: ${data.access_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    // 2. Kiểm tra và lưu REFRESH TOKEN (nếu có)\n    if (data && data.refresh_token) {\n        hopp.env.active.set(REFRESH_TOKEN_VAR, data.refresh_token);\n        console.log(`Refresh Token đã được lưu: ${data.refresh_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    return tokenFound;\n}\n\n\n// A. Trích xuất từ responseData trực tiếp (ví dụ: {\"access_token\": \"...\", \"refresh_token\": \"...\"})\nlet found = extractAndSetTokens(responseData);\n\n// B. Trích xuất từ đối tượng 'data' lồng ghép (ví dụ: {\"data\": {\"access_token\": \"...\", \"refresh_token\": \"...\"}})\nif (!found && responseData && responseData.data) {\n    found = extractAndSetTokens(responseData.data);\n}\n\nif (found) {\n    // Tùy chọn: Thêm test để xác nhận response thành công (Status 2xx)\n    hopp.test(\"Login successful (Status 2xx)\", () => {\n        hopp.expect(hopp.response.statusCode).toBeLevel2xx();\n    });\n}\nelse {\n    console.error(\"Không tìm thấy 'access_token' hoặc 'refresh_token' trong response body.\");\n}",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"login\": \"\",\n    \"password\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Refresh Token",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/refresh",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"refresh_token\": \"<<refresh_token>>\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Validate Username",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/validate/username",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"username\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Validate Email",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/validate/email",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"email\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Forgot Password",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/forgot-password",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
+                        "body": {
+                            "body": "{\n    \"username\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"password_confirmation\": \"\"\n}",
+                            "contentType": "application/json"
                         },
-                        {
-                            "key": "x-origin",
-                            "value": "<<origin>>",
-                            "active": true,
-                            "description": "Frontend origin URL for password reset link"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"email\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Validate Reset Token",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/auth/reset-password/validate",
-                    "params": [
-                        {
-                            "key": "token",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Reset Password",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/reset-password",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"token\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"password_confirmation\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get User Info",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/auth/user",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Logout",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/logout",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Verify Email",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/verify-email",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"token\": \"\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Resend Verification Email",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/resend-verification-email",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "x-origin",
-                            "value": "<<origin>>",
-                            "active": true,
-                            "description": "Frontend origin URL for email verification link"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Delete Account",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/account",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"DELETE\"\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Columns",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/auth/columns",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Update Columns",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/columns",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"PUT\",\n    \"columns\": [\"home\", \"search\", \"activity\"]\n}"
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Update Profile",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/auth/profile",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
+                        "name": "Register",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
                             {
-                                "key": "_method",
+                                "key": "Content-Type",
+                                "value": "application/json",
                                 "active": true,
-                                "isFile": false,
-                                "value": "PUT"
+                                "description": ""
                             },
                             {
-                                "key": "name",
+                                "key": "x-origin",
+                                "value": "<<origin>>",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "username",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "bio",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "avatar",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "is_private",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": "Frontend origin URL for email verification link"
                             }
-                        ]
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/register",
+                        "responses": {},
+                        "testScript": "export {};\nconst responseData = hopp.response.body.asJSON();\n\nconst ACCESS_TOKEN_VAR = \"access_token\";\nconst REFRESH_TOKEN_VAR = \"refresh_token\";\n\nfunction extractAndSetTokens(data) {\n    let tokenFound = false;\n\n    // 1. Kiểm tra và lưu ACCESS TOKEN\n    if (data && data.access_token) {\n        hopp.env.active.set(ACCESS_TOKEN_VAR, data.access_token);\n        console.log(`Access Token đã được lưu: ${data.access_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    // 2. Kiểm tra và lưu REFRESH TOKEN (nếu có)\n    if (data && data.refresh_token) {\n        hopp.env.active.set(REFRESH_TOKEN_VAR, data.refresh_token);\n        console.log(`Refresh Token đã được lưu: ${data.refresh_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    return tokenFound;\n}\n\n\n// A. Trích xuất từ responseData trực tiếp (ví dụ: {\"access_token\": \"...\", \"refresh_token\": \"...\"})\nlet found = extractAndSetTokens(responseData);\n\n// B. Trích xuất từ đối tượng 'data' lồng ghép (ví dụ: {\"data\": {\"access_token\": \"...\", \"refresh_token\": \"...\"}})\nif (!found && responseData && responseData.data) {\n    found = extractAndSetTokens(responseData.data);\n}\n\nif (found) {\n    // Tùy chọn: Thêm test để xác nhận response thành công (Status 2xx)\n    hopp.test(\"Login successful (Status 2xx)\", () => {\n        hopp.expect(hopp.response.statusCode).toBeLevel2xx();\n    });\n}\nelse {\n    console.error(\"Không tìm thấy 'access_token' hoặc 'refresh_token' trong response body.\");\n}",
+                        "description": null,
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00fvpf1ddzdrn0e7"
                     },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziag00gbpf1dgyoz37x9",
-            "name": "Posts",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Get Feed",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/posts/feed",
-                    "params": [
-                        {
-                            "key": "type",
-                            "value": "for_you",
-                            "active": true,
-                            "description": "Feed type: for_you, following, or ghost (required when authenticated). Note: Reposts are excluded from feed (only original posts and quotes appear). Use /users/{id}/reposts to get user's reposts."
+                    {
+                        "v": "17",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
                         },
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
+                        "body": {
+                            "body": "{\n    \"login\": \"\",\n    \"password\": \"\"\n}",
+                            "contentType": "application/json"
                         },
-                        {
-                            "key": "per_page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": "Required when authenticated. Type param is required when authenticated."
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Single Post",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/posts/:id",
-                    "params": [],
-                    "headers": [],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Create Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": ""
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Update Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
+                        "name": "Login",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
                             {
-                                "key": "_method",
+                                "key": "Content-Type",
+                                "value": "application/json",
                                 "active": true,
-                                "isFile": false,
-                                "value": "PUT"
-                            },
-                            {
-                                "key": "content",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "media[]",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "reply_permission",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            },
-                            {
-                                "key": "topic_name",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
                             }
-                        ]
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/login",
+                        "responses": {},
+                        "testScript": "export {};\nconst responseData = hopp.response.body.asJSON();\n\nconst ACCESS_TOKEN_VAR = \"access_token\";\nconst REFRESH_TOKEN_VAR = \"refresh_token\";\n\nfunction extractAndSetTokens(data) {\n    let tokenFound = false;\n\n    // 1. Kiểm tra và lưu ACCESS TOKEN\n    if (data && data.access_token) {\n        hopp.env.active.set(ACCESS_TOKEN_VAR, data.access_token);\n        console.log(`Access Token đã được lưu: ${data.access_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    // 2. Kiểm tra và lưu REFRESH TOKEN (nếu có)\n    if (data && data.refresh_token) {\n        hopp.env.active.set(REFRESH_TOKEN_VAR, data.refresh_token);\n        console.log(`Refresh Token đã được lưu: ${data.refresh_token.substring(0, 30)}...`);\n        tokenFound = true;\n    }\n\n    return tokenFound;\n}\n\n\n// A. Trích xuất từ responseData trực tiếp (ví dụ: {\"access_token\": \"...\", \"refresh_token\": \"...\"})\nlet found = extractAndSetTokens(responseData);\n\n// B. Trích xuất từ đối tượng 'data' lồng ghép (ví dụ: {\"data\": {\"access_token\": \"...\", \"refresh_token\": \"...\"}})\nif (!found && responseData && responseData.data) {\n    found = extractAndSetTokens(responseData.data);\n}\n\nif (found) {\n    // Tùy chọn: Thêm test để xác nhận response thành công (Status 2xx)\n    hopp.test(\"Login successful (Status 2xx)\", () => {\n        hopp.expect(hopp.response.statusCode).toBeLevel2xx();\n    });\n}\nelse {\n    console.error(\"Không tìm thấy 'access_token' hoặc 'refresh_token' trong response body.\");\n}",
+                        "description": null,
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00fwpf1drzow2jpg"
                     },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Delete Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
                         },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"DELETE\"\n}"
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Replies",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/posts/:id/replies",
-                    "params": [
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
+                        "body": {
+                            "body": "{\n    \"refresh_token\": \"<<refresh_token>>\"\n}",
+                            "contentType": "application/json"
                         },
-                        {
-                            "key": "per_page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get User Reposts",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/users/:id/reposts",
-                    "params": [
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": "Page number for pagination"
-                        },
-                        {
-                            "key": "per_page",
-                            "value": "",
-                            "active": true,
-                            "description": "Number of items per page (default: 20)"
-                        }
-                    ],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": "Optional - for interaction flags (is_liked_by_auth, etc.)"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Create Reply",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/reply",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
+                        "name": "Refresh Token",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
                             {
-                                "key": "content",
+                                "key": "Content-Type",
+                                "value": "application/json",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/refresh",
+                        "responses": {},
+                        "testScript": "export {};\n",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00fxpf1dpzhbu77p"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"username\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Validate Username",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/validate/username",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00fypf1d1849zo09"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"email\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Validate Email",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/validate/email",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00fzpf1dex1kix6w"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"email\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Forgot Password",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
                             },
                             {
-                                "key": "media[]",
+                                "key": "x-origin",
+                                "value": "<<origin>>",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": "Frontend origin URL for password reset link"
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/forgot-password",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g0pf1dp5wp4lxp"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Validate Reset Token",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "token",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [],
+                        "endpoint": "<<base_url>>/api/auth/reset-password/validate",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g1pf1dceytcr9x"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"token\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"password_confirmation\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Reset Password",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/reset-password",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g2pf1d65ws2jt6"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get User Info",
+                        "method": "GET",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/user",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g3pf1dbfizq89c"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Logout",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/logout",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g4pf1dkkdaqatk"
+                    },
+                    {
+                        "v": "17",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"token\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Verify Email",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/verify-email",
+                        "responses": {},
+                        "testScript": "",
+                        "description": null,
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g5pf1d6yqh4pzs"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Resend Verification Email",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
                             },
                             {
-                                "key": "reply_permission",
+                                "key": "x-origin",
+                                "value": "<<origin>>",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": "Frontend origin URL for email verification link"
                             }
-                        ]
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/resend-verification-email",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g6pf1dt2lsp1h0"
                     },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Pending Replies",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/posts/:id/pending-replies",
-                    "params": [
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
                         },
-                        {
-                            "key": "per_page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Approve Reply",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/replies/:replyId/approve",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
+                        "body": {
+                            "body": "{\n    \"_method\": \"DELETE\"\n}",
+                            "contentType": "application/json"
                         },
-                        {
-                            "key": "replyId",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Reject Reply",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/replies/:replyId/reject",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        },
-                        {
-                            "key": "replyId",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziah00gnpf1dgaxy0n1s",
-            "name": "Post Interactions",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Like Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/like",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Repost",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/repost",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Quote Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/quote",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
+                        "name": "Delete Account",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
                             {
-                                "key": "content",
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
                             },
                             {
-                                "key": "media[]",
+                                "key": "Content-Type",
+                                "value": "application/json",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/account",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g7pf1dn65ectq1"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Columns",
+                        "method": "GET",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/columns",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g8pf1deaxs42mi"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"_method\": \"PUT\",\n    \"columns\": [\"home\", \"search\", \"activity\"]\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Update Columns",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
                             },
                             {
-                                "key": "reply_permission",
+                                "key": "Content-Type",
+                                "value": "application/json",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
                             }
-                        ]
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/columns",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00g9pf1dh9roecur"
                     },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Save Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/save",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Hide Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/hide",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Report Post",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/posts/:id/report",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
                         },
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"reason\": \"\",\n    \"description\": \"\"\n}"
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziai00gupf1dylbo4wwz",
-            "name": "User Actions",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Mute User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/mute",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Unmute User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/mute",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "username",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "bio",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "avatar",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "is_private",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
                         },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"DELETE\"\n}"
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Restrict User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/restrict",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Block User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/block",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Unblock User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/block",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"DELETE\"\n}"
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziai00h0pf1d132zum3z",
-            "name": "Follow",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Follow User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/follow",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Unfollow User",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/users/:id/follow",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "Content-Type",
-                            "value": "application/json",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "application/json",
-                        "body": "{\n    \"_method\": \"DELETE\"\n}"
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Followers",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/users/:id/followers",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Followings",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/users/:id/followings",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [
-                        {
-                            "key": "id",
-                            "value": "",
-                            "active": true
-                        }
-                    ],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziai00h5pf1duczppfu1",
-            "name": "Search",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Search Topics and Users",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/search",
-                    "params": [
-                        {
-                            "key": "q",
-                            "value": "",
-                            "active": true,
-                            "description": "Search query (required, min 2 chars)"
-                        },
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "per_page_topics",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "per_page_users",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": "Optional - better results when authenticated"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Search Topics",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/topics/search",
-                    "params": [
-                        {
-                            "key": "q",
-                            "value": "",
-                            "active": true,
-                            "description": "Search query (required, min 2 chars)"
-                        }
-                    ],
-                    "headers": [],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                },
-                {
-                    "v": "17",
-                    "name": "Get Follow Suggestions",
-                    "method": "GET",
-                    "endpoint": "<<base_url>>/api/users/suggestions",
-                    "params": [
-                        {
-                            "key": "page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        },
-                        {
-                            "key": "per_page",
-                            "value": "",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": "Optional - better suggestions when authenticated"
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": null,
-                        "body": null
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
-            },
-            "headers": [],
-            "variables": [],
-            "description": null
-        },
-        {
-            "v": 11,
-            "id": "cmib6ziaj00h9pf1d98m2tnxt",
-            "name": "File Upload",
-            "folders": [],
-            "requests": [
-                {
-                    "v": "17",
-                    "name": "Upload Avatar",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/upload/avatar",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
+                        "name": "Update Profile",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
                             {
-                                "key": "avatar",
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
                                 "active": true,
-                                "isFile": false,
-                                "value": ""
+                                "description": ""
                             }
-                        ]
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
+                        ],
+                        "endpoint": "<<base_url>>/api/auth/profile",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaf00gapf1dakex9ifq"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
                 },
-                {
-                    "v": "17",
-                    "name": "Upload Media",
-                    "method": "POST",
-                    "endpoint": "<<base_url>>/api/upload/media",
-                    "params": [],
-                    "headers": [
-                        {
-                            "key": "Authorization",
-                            "value": "Bearer <<access_token>>",
-                            "active": true,
-                            "description": ""
-                        }
-                    ],
-                    "preRequestScript": "",
-                    "testScript": "",
-                    "auth": {
-                        "authType": "inherit",
-                        "authActive": true
-                    },
-                    "body": {
-                        "contentType": "multipart/form-data",
-                        "body": [
-                            {
-                                "key": "media[]",
-                                "active": true,
-                                "isFile": false,
-                                "value": ""
-                            }
-                        ]
-                    },
-                    "requestVariables": [],
-                    "responses": {},
-                    "description": null
-                }
-            ],
-            "auth": {
-                "authType": "inherit",
-                "authActive": true
+                "headers": [],
+                "variables": [],
+                "description": null
             },
-            "headers": [],
-            "variables": [],
-            "description": null
-        }
-    ],
-    "requests": [],
-    "auth": {
-        "authType": "inherit",
-        "authActive": true
-    },
-    "headers": [],
-    "variables": [
-        {
-            "key": "base_url",
-            "initialValue": "",
-            "currentValue": "",
-            "secret": false
+            {
+                "v": 11,
+                "id": "cmib6ziag00gbpf1dgyoz37x9",
+                "name": "Posts",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Feed",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "type",
+                                "value": "for_you",
+                                "active": true,
+                                "description": "Feed type: for_you, following, or ghost (required when authenticated). Note: Reposts are excluded from feed (only original posts and quotes appear). Use /users/{id}/reposts to get user's reposts."
+                            },
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": "Required when authenticated. Type param is required when authenticated."
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/feed",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziag00gcpf1dn2r13nmz"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Single Post",
+                        "method": "GET",
+                        "params": [],
+                        "headers": [],
+                        "endpoint": "<<base_url>>/api/posts/:id",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziag00gdpf1dnpj4jju8"
+                    },
+                    {
+                        "v": "17",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "",
+                            "contentType": "application/json"
+                        },
+                        "name": "Create Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts",
+                        "responses": {},
+                        "testScript": "",
+                        "description": null,
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziag00gepf1d76nip4ob"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "content",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "media[]",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "reply_permission",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "topic_name",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
+                        },
+                        "name": "Update Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziag00gfpf1d8pgpfk38"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"_method\": \"DELETE\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Delete Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziag00ggpf1dgfj7fdwf"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Replies",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [],
+                        "endpoint": "<<base_url>>/api/posts/:id/replies",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00ghpf1d3l8fed46"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get User Reposts",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": "Page number for pagination"
+                            },
+                            {
+                                "key": "per_page",
+                                "value": "",
+                                "active": true,
+                                "description": "Number of items per page (default: 20)"
+                            }
+                        ],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": "Optional - for interaction flags (is_liked_by_auth, etc.)"
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/reposts",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gipf1dvfugcp08"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "content",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "media[]",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "reply_permission",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
+                        },
+                        "name": "Create Reply",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/reply",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gjpf1d16k8lrp4"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Pending Replies",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/pending-replies",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gkpf1dhduu3rd9"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Approve Reply",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/replies/:replyId/approve",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            },
+                            {
+                                "key": "replyId",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00glpf1dlx56wdzn"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Reject Reply",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/replies/:replyId/reject",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            },
+                            {
+                                "key": "replyId",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gmpf1deaog8m29"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            },
+            {
+                "v": 11,
+                "id": "cmib6ziah00gnpf1dgaxy0n1s",
+                "name": "Post Interactions",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Like Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/like",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gopf1dd0c5gr43"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Repost",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/repost",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gppf1dn9j26n8a"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "content",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "media[]",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                },
+                                {
+                                    "key": "reply_permission",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
+                        },
+                        "name": "Quote Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/quote",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gqpf1dy0gv5em6"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Save Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/save",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00grpf1dyxaj6m3k"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Hide Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/hide",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gspf1db9yry9gx"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"reason\": \"\",\n    \"description\": \"\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Report Post",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/posts/:id/report",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziah00gtpf1dty15wpij"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            },
+            {
+                "v": 11,
+                "id": "cmib6ziai00gupf1dylbo4wwz",
+                "name": "User Actions",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Mute User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/mute",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00gvpf1d11ue9y4z"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"_method\": \"DELETE\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Unmute User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/mute",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00gwpf1drhvbrng8"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Restrict User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/restrict",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00gxpf1dmn5xnvuh"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Block User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/block",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00gypf1dof6t16wq"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"_method\": \"DELETE\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Unblock User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/block",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00gzpf1ddqn6ns3h"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            },
+            {
+                "v": 11,
+                "id": "cmib6ziai00h0pf1d132zum3z",
+                "name": "Follow",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Follow User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/follow",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00h1pf1d8l0n72b4"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": "{\n    \"_method\": \"DELETE\"\n}",
+                            "contentType": "application/json"
+                        },
+                        "name": "Unfollow User",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/follow",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00h2pf1d72fpwc9q"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Followers",
+                        "method": "GET",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/followers",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00h3pf1d6gqw2q1k"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Followings",
+                        "method": "GET",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/:id/followings",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [
+                            {
+                                "key": "id",
+                                "value": "",
+                                "active": true
+                            }
+                        ],
+                        "id": "cmib6ziai00h4pf1d0yv52p8d"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            },
+            {
+                "v": 11,
+                "id": "cmib6ziai00h5pf1duczppfu1",
+                "name": "Search",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Search Topics and Users",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "q",
+                                "value": "",
+                                "active": true,
+                                "description": "Search query (required, min 2 chars)"
+                            },
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page_topics",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page_users",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": "Optional - better results when authenticated"
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/search",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaj00h6pf1duxqepnbc"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Search Topics",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "q",
+                                "value": "",
+                                "active": true,
+                                "description": "Search query (required, min 2 chars)"
+                            }
+                        ],
+                        "headers": [],
+                        "endpoint": "<<base_url>>/api/topics/search",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaj00h7pf1dvof6ig85"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": null,
+                            "contentType": null
+                        },
+                        "name": "Get Follow Suggestions",
+                        "method": "GET",
+                        "params": [
+                            {
+                                "key": "page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            },
+                            {
+                                "key": "per_page",
+                                "value": "",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": "Optional - better suggestions when authenticated"
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/users/suggestions",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaj00h8pf1di5umvxtt"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            },
+            {
+                "v": 11,
+                "id": "cmib6ziaj00h9pf1d98m2tnxt",
+                "name": "File Upload",
+                "folders": [],
+                "requests": [
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "avatar",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
+                        },
+                        "name": "Upload Avatar",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/upload/avatar",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaj00hapf1d2t2xoqog"
+                    },
+                    {
+                        "v": "16",
+                        "auth": {
+                            "authType": "inherit",
+                            "authActive": true
+                        },
+                        "body": {
+                            "body": [
+                                {
+                                    "key": "media[]",
+                                    "value": "",
+                                    "active": true,
+                                    "isFile": false
+                                }
+                            ],
+                            "contentType": "multipart/form-data"
+                        },
+                        "name": "Upload Media",
+                        "method": "POST",
+                        "params": [],
+                        "headers": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer <<access_token>>",
+                                "active": true,
+                                "description": ""
+                            }
+                        ],
+                        "endpoint": "<<base_url>>/api/upload/media",
+                        "responses": {},
+                        "testScript": "",
+                        "preRequestScript": "",
+                        "requestVariables": [],
+                        "id": "cmib6ziaj00hbpf1d2bfhklvl"
+                    }
+                ],
+                "auth": {
+                    "authType": "inherit",
+                    "authActive": true
+                },
+                "headers": [],
+                "variables": [],
+                "description": null
+            }
+        ],
+        "requests": [],
+        "auth": {
+            "authType": "inherit",
+            "authActive": true
         },
-        {
-            "key": "origin",
-            "initialValue": "",
-            "currentValue": "",
-            "secret": false
-        },
-        {
-            "key": "access_token",
-            "initialValue": "",
-            "currentValue": "",
-            "secret": false
-        },
-        {
-            "key": "refresh_token",
-            "initialValue": "",
-            "currentValue": "",
-            "secret": false
-        }
-    ],
-    "description": null
-}
+        "headers": [],
+        "variables": [
+            {
+                "key": "base_url",
+                "initialValue": "",
+                "currentValue": "",
+                "secret": false
+            },
+            {
+                "key": "origin",
+                "initialValue": "",
+                "currentValue": "",
+                "secret": false
+            },
+            {
+                "key": "access_token",
+                "initialValue": "",
+                "currentValue": "",
+                "secret": false
+            },
+            {
+                "key": "refresh_token",
+                "initialValue": "",
+                "currentValue": "",
+                "secret": false
+            }
+        ],
+        "description": null
+    }
+]

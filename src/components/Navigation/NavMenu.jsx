@@ -33,7 +33,7 @@ export default function NavMenu({ children, onClick }) {
 
       <DropdownMenuContent
         align="end"
-        className="ml-4 w-60 overflow-hidden rounded-2xl bg-[#262626] p-2 font-medium text-white"
+        className={`ml-4 w-60 overflow-hidden rounded-2xl border border-(--outline-primary) bg-(--bg-nav) p-2 font-medium`}
       >
         <DropdownMenuItem className={`${itemStyles}`} onClick={onClick}>
           Giao diện
@@ -44,7 +44,7 @@ export default function NavMenu({ children, onClick }) {
         </DropdownMenuItem>
         <DropdownMenuItem className={`${itemStyles}`}>Cài đặt</DropdownMenuItem>
 
-        <DropdownMenuSeparator className={`h-px bg-[rgb(51,54,56)]`} />
+        <DropdownMenuSeparator className={`h-px bg-(--color-seperator)`} />
 
         <DropdownMenuItem className={`${itemStyles}`}>
           Bảng feed
@@ -55,7 +55,7 @@ export default function NavMenu({ children, onClick }) {
           Đã thích
         </DropdownMenuItem>
 
-        <DropdownMenuSeparator className={`h-px bg-[rgb(51,54,56)]`} />
+        <DropdownMenuSeparator className={`h-px bg-(--color-seperator)`} />
 
         <DropdownMenuItem className={`${itemStyles}`}>
           Báo cạo sự cố

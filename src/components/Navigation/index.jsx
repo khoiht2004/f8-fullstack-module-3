@@ -18,14 +18,13 @@ import ThemeModal from "../Theme/ThemeModal";
 const styles = {
   link: {
     fontSize: "24px",
-    // color: "#99a1af", // Màu mặc định
     cursor: "pointer",
   },
   addPostBtn: {
     fontSize: "24px",
-    color: "#99a1af",
+    color: "var(--color-icon)",
     cursor: "pointer",
-    backgroundColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "var(--bg-icon)",
   },
 };
 
@@ -66,7 +65,7 @@ function Navigation() {
   };
 
   return (
-    <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2 text-white">
+    <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2">
       {/* Logo */}
       <section className="size-15">
         <NavLink
@@ -79,7 +78,7 @@ function Navigation() {
 
       {/* Nav icon */}
       <section>
-        <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:z-10 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-black max-md:p-1.5">
+        <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:z-10 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-(--bg-base) max-md:p-1.5">
           {items.map((item, index) => (
             <li
               className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around"
@@ -89,9 +88,11 @@ function Navigation() {
                 to={item.path}
                 style={({ isActive }) => ({
                   ...(item.path ? styles.link : styles.addPostBtn),
-                  color: isActive ? "#FFFFFF" : "#FFFFFF40",
+                  color: isActive
+                    ? "var(--color-icon-active)"
+                    : "var(--color-icon)",
                 })}
-                className="rounded-[12px] px-3.75 py-2.5 hover:bg-[#ffffff14] max-md:flex max-md:w-full max-md:items-center max-md:justify-center max-md:rounded-xl"
+                className="rounded-[12px] px-3.75 py-2.5 hover:bg-(--bg-icon-hover) max-md:flex max-md:w-full max-md:items-center max-md:justify-center max-md:rounded-xl"
                 end={item.path === "/"}
               >
                 {({ isActive }) => (
@@ -111,7 +112,7 @@ function Navigation() {
           <FontAwesomeIcon
             icon={["fas", "bars"]}
             style={styles.link}
-            className="mb-5 text-[#FFFFFF40] transition ease-in hover:text-white"
+            className="mb-5 text-(--color-icon) transition ease-in hover:text-(--color-icon-hover)"
           />
         </NavMenu>
         {themeModalOpen && <ThemeModal onClick={handleCloseThemeModal} />}

@@ -14,7 +14,7 @@ function ForgotPasswordPage() {
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const inputStyles =
-    "text-semibold h-auto border-transparent focus:border focus:border-[#77777790] bg-[#1E1E1E] p-4 text-white";
+    "text-semibold h-auto border-transparent focus:border focus:border-(--outline-primary) bg-(--bg-tertiary) p-4 text-white";
   const text = "text-[15px] text-[#777777]";
   const hoverFooter = "transition hover:underline";
 
@@ -54,9 +54,9 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex h-dvh w-dvw items-center justify-center bg-[#101010]">
+    <div className="flex h-dvh w-dvw items-center justify-center bg-(--bg-auth-page)">
       <main className="flex h-full w-92.5 flex-col items-center justify-center">
-        <h1 className="mb-4 text-[16px] font-bold text-[#F3F5F7]">
+        <h1 className="mb-4 text-[16px] font-bold text-(--text-color)">
           Gửi liên kết đến Email:
         </h1>
 
@@ -92,7 +92,7 @@ function ForgotPasswordPage() {
 
           <Button
             type="submit"
-            className="h-auto w-full cursor-pointer bg-white p-4 text-[16px] text-black hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-auto w-full cursor-pointer bg-(--foreground) p-4 text-[16px] text-(--background) hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             disabled={!isValid || isLoading}
           >
             {isLoading ? "Đang gửi liên kết..." : "Gửi liên kết"}
@@ -105,9 +105,9 @@ function ForgotPasswordPage() {
           <span>-----</span>
         </p>
 
-        <div className="mb-6 flex w-full cursor-pointer items-center justify-start gap-3 rounded-2xl border border-[#77777790] bg-[#101010] p-5 pr-3">
-          <Instagram className="size-10 text-white" />
-          <span className={`${text} flex-1 pl-5 font-medium text-white`}>
+        <div className="mb-6 flex w-full cursor-pointer items-center justify-start gap-3 rounded-2xl border border-(--outline-primary) bg-(--bg-auth-page) p-5 pr-3">
+          <Instagram className="size-10" />
+          <span className={`${text} flex-1 pl-5 font-medium`}>
             Tiếp tục bằng Instagram
           </span>
           <ChevronRight className="size-6 h-auto w-auto p-2 font-light text-[#777777]" />
@@ -117,7 +117,7 @@ function ForgotPasswordPage() {
           Bạn đã có tài khoản?
           <NavLink
             to="/login"
-            className="ml-1 font-semibold text-white hover:underline"
+            className="ml-1 font-semibold text-(--text-color) hover:underline"
           >
             Đăng nhập
           </NavLink>

@@ -19,7 +19,6 @@ import { useEffect } from "react";
 import { getAccessToken } from "@/utils/auth";
 import { setCredentials } from "@/store/slices/authSlice";
 import Snowfall from "react-snowfall";
-import ThemeModal from "@/components/Theme/ThemeModal";
 
 function DefaultLayout() {
   const dispatch = useDispatch();
@@ -53,14 +52,15 @@ function DefaultLayout() {
 
     checkAuth();
   }, [dispatch, isAuthenticated, getUserInfo]);
-  console.log(isAuthenticated);
 
   return (
     <>
-      <div className="w-full bg-black px-5">
+      <div className={`w-full bg-(--bg-base)`}>
         {/* <Snowfall color="#dee4fd" /> */}
         <Navigation />
-        <main className="mx-auto flex h-dvh justify-center gap-3 text-white">
+        <main
+          className={`mx-auto flex h-dvh justify-center gap-3 overflow-auto`}
+        >
           <div className="flex w-full max-w-160 flex-col items-center">
             <Outlet />
           </div>
@@ -69,7 +69,9 @@ function DefaultLayout() {
         </main>
 
         {/* Add posts button */}
-        <Button className="fixed right-[3%] bottom-[3%] h-17 w-20.5 cursor-pointer rounded-2xl outline outline-[#77777790] outline-solid hover:scale-110 max-md:hidden">
+        <Button
+          className={`fixed right-[3%] bottom-[3%] h-17 w-20.5 cursor-pointer rounded-2xl bg-(--bg-primary) text-(--color-icon) outline outline-(--outline-primary) outline-solid hover:scale-110 max-md:hidden`}
+        >
           <FontAwesomeIcon icon="fas fa-plus" className="fa-xl" />
         </Button>
       </div>

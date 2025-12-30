@@ -39,9 +39,46 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom */
+  --bg-base: var(--bg-base);
+  --bg-primary: var(--bg-primary);
+  --bg-second: var(--bg-second);
+  --bg-tertiary: var(--bg-tertiary);
+  --bg-auth-page: var(--bg-auth-page);
+  --bg-icon: var(--bg-icon);
+  --bg-modal: var(--bg-primary);
+  --bg-theme-icon: var(--bg-theme-icon);
+  --bg-nav: var(--bg-primary);
+  --bg-hover: var(--bg-hover);
+  --outline-primary: var(--outline-primary);
+  --color-seperator: var(--color-seperator);
+  --text-color: var(--text-color);
+  --color-icon: var(--color-icon);
+  --color-icon-active: var(--color-icon-active);
+  --color-icon-hover: var(--color-icon-hover);
+  --bg-icon-hover: var(--bg-icon-hover);
 }
 
+/* Mặc định - được hiểu là theme sáng */
 :root {
+  /* Custom */
+  --bg-base: #fafafa;
+  --bg-primary: #ffffff;
+  --bg-second: #999999;
+  --bg-tertiary: #f5f5f5;
+  --bg-auth-page: #fff;
+  --bg-icon: #00000009;
+  --bg-theme-icon: #fafafa;
+  --bg-hover: #0000000a;
+  --outline-primary: #00000026;
+  --color-seperator: #00000026;
+  --text-color: #000000;
+  --color-icon: #b8b8b8;
+  --color-icon-active: #000000;
+  --color-icon-hover: #000000;
+  --bg-icon-hover: #00000009;
+  /* ------- */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -84,7 +121,25 @@
   --side-navigation-foreground: rgb(184, 184, 184);
 }
 
+/* Theme tối */
 .dark {
+  /* Custom */
+  --bg-base: #000000;
+  --bg-primary: #181818;
+  --bg-second: #262626;
+  --bg-tertiary: #101010;
+  --bg-auth-page: #101010;
+  --bg-icon: #ffffff14;
+  --bg-theme-icon: #0a0a0a;
+  --bg-hover: #ffffff0a;
+  --outline-primary: #f3f5f726;
+  --color-seperator: #f3f5f726;
+  --text-color: #f3f5f7;
+  --color-icon: #ffffff40;
+  --color-icon-active: #ffffff;
+  --color-icon-hover: #fff;
+  --bg-icon-hover: #ffffff14;
+  /* -------- */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -130,4 +185,24 @@
     font-size: 15px;
     font-family: var(--sans);
   }
+}
+/* width scrollbar */
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* track (nền) */
+*::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+/* thumb (thanh kéo) */
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.18);
+  border-radius: 999px; /* BO TRÒN */
+}
+
+/* hover cho mượt */
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.28);
 }

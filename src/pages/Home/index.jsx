@@ -12,7 +12,7 @@ function HomePage() {
     per_page: 40,
   });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
