@@ -61,7 +61,7 @@ function DefaultLayout() {
         <main
           className={`mx-auto flex h-dvh justify-center gap-3 overflow-auto`}
         >
-          <div className="flex w-full max-w-160 flex-col items-center">
+          <div className="flex w-full max-w-160 flex-col">
             <Outlet />
           </div>
           {/* Chỉ hiển thị LoginPanel khi CHƯA đăng nhập */}

@@ -7,7 +7,7 @@ function Header({ title }) {
     "relative top-[25px] size-[50px] rounded-full border border-solid border-(--outline-primary) bg-transparent outline-[50px] outline-(--bg-base)";
 
   return (
-    <header className="fixed top-0 h-15 w-160 bg-(--bg-base)">
+    <header className="fixed top-0 z-10 h-15 w-160 bg-(--bg-base)">
       {/* Title */}
       <div className="sticky flex w-full items-center justify-center">
         <h1 className="my-4 text-lg font-semibold">{title}</h1>
