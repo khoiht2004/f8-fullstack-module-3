@@ -54,6 +54,7 @@
   --outline-primary: var(--outline-primary);
   --color-seperator: var(--color-seperator);
   --text-color: var(--text-color);
+  --color-time: var(--color-time);
   --color-icon: var(--color-icon);
   --color-user-action-post: var(--color-user-action-post);
   --color-icon-active: var(--color-icon-active);
@@ -75,6 +76,7 @@
   --outline-primary: #00000026;
   --color-seperator: #00000026;
   --text-color: #000000;
+  --color-time: #999;
   --color-icon: #b8b8b8;
   --color-user-action-post: #424242;
   --color-icon-active: #000000;
@@ -138,6 +140,7 @@
   --color-seperator: #f3f5f726;
   --text-color: #f3f5f7;
   --color-icon: #ffffff40;
+  --color-time: #777;
   --color-user-action-post: #ccc;
   --color-icon-active: #ffffff;
   --color-icon-hover: #fff;

@@ -78,7 +78,7 @@ function Navigation() {
 
       {/* Nav icon */}
       <section>
-        <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:z-10 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-(--bg-base) max-md:p-1.5">
+        <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-(--bg-base) max-md:p-1.5">
           {items.map((item, index) => (
             <li
               className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around"

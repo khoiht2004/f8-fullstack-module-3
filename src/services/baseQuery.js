@@ -58,13 +58,13 @@ const baseQuery = async (args) => {
                 } catch (refreshError) {
                     // Refresh token cũng hết hạn
                     clearTokens();
-                    window.location.href = "/login";
+                    // window.location.href = "/login";
                     return { error: refreshError };
                 }
             } else {
                 // Không có refresh token
                 clearTokens();
-                window.location.href = "/login";
+                // window.location.href = "/login";
             }
         }
 

@@ -1,4 +1,4 @@
-import { formatCount, formatTime, getImageGridClass } from "@/utils/helper";
+import { formatTime } from "@/utils/helper";
 import {
   Card,
   CardAction,
@@ -12,16 +12,35 @@ import { Ellipsis, Heart, MessageCircle, Repeat, Send } from "lucide-react";
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "../ui/separator";
+import { useState } from "react";
+import CommentModal from "../Modal/CommentModal";
 
 /**
  * Hiển thị từng card có nội dung riêng biệt
  * Lặp qua PostCard -> render vào children của PostSlide trong các trang khác
  * */
 function PostCard({ post }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const iconStyles = "size-4.5 text-(--color-user-action-post)";
   const wrapperIcon =
     "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover)";
   const statePostCount = "text-[13px] text-(--color-user-action-post)";
+
+  const handleOpen = (e) => {
+    e.stopPropagation();
+    setIsOpen(true);
+  };
+
+  const handleClose = (e) => {
+    e.stopPropagation();
+    if (
+      e.target.classList.contains("overlay") ||
+      e.target.classList.contains("close-btn")
+    )
+      setIsOpen(false);
+  };
+
   return (
     <>
       <Card
@@ -31,10 +50,7 @@ function PostCard({ post }) {
       >
         <Avatar className={`size-9`}>
           <AvatarImage
-            src={
-              post?.user?.avatar_url ||
-              "../../../public/img/placeholder_avatar.jpg"
-            }
+            src={post?.user?.avatar_url || "/img/placeholder_avatar.jpg"}
             className="size-full"
           />
         </Avatar>
@@ -43,7 +59,7 @@ function PostCard({ post }) {
         <div className="flex-1">
           <CardHeader className={`flex items-center px-0`}>
             <CardTitle>{post?.user?.username}</CardTitle>
-            <CardDescription className={`flex-1`}>
+            <CardDescription className={`flex-1 text-(--color-time)`}>
               {formatTime(post.created_at)}
             </CardDescription>
             <CardAction>
@@ -61,25 +77,33 @@ function PostCard({ post }) {
             {/* Số lượng lượt thích */}
             <div className={`${wrapperIcon}`}>
               <Heart className={`${iconStyles}`} />
-              <span className={`${statePostCount}`}>{post.likes_count}</span>
+              <span className={`${statePostCount}`}>
+                {post.likes_count === 0 ? "" : post.likes_count}
+              </span>
             </div>
             {/* Số lượng bình luận */}
-            <div className={`${wrapperIcon}`}>
+            <div className={`${wrapperIcon}`} onClick={handleOpen}>
               <MessageCircle className={`${iconStyles}`} />
-              <span className={`${statePostCount}`}>{post.replies_count}</span>
+              <span className={`${statePostCount}`}>
+                {post.replies_count === 0 ? "" : post.replies_count}
+              </span>
             </div>
             <div className={`${wrapperIcon}`}>
               {/* Số lượng đăng lại */}
               <Repeat className={`${iconStyles}`} />
               <span className={`${statePostCount}`}>
-                {post.reposts_and_quotes_count}
+                {post.reposts_and_quotes_count === 0
+                  ? ""
+                  : post.reposts_and_quotes_count}
               </span>
             </div>
             {/* Số lượng chia sẻ */}
             <div className={`${wrapperIcon}`}>
               <Send className={`${iconStyles} rotate-20`} />
               <span className={`${statePostCount}`}>
-                {post.reposts_and_quotes_count}
+                {post.reposts_and_quotes_count === 0
+                  ? ""
+                  : post.reposts_and_quotes_count}
               </span>
             </div>
           </CardFooter>
@@ -87,6 +111,8 @@ function PostCard({ post }) {
       </Card>
 
       <Separator className={`bg-(--outline-primary)`} />
+
+      {isOpen && <CommentModal post={post} onClick={handleClose} />}
     </>
   );
 }
