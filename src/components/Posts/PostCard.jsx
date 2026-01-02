@@ -34,10 +34,8 @@ function PostCard({ post }) {
 
   const handleClose = (e) => {
     e.stopPropagation();
-    if (
-      e.target.classList.contains("overlay") ||
-      e.target.classList.contains("close-btn")
-    )
+    // Nếu click vào overlay (bên ngoài modal) hoặc vào nút đóng (hoặc con của nó)
+    if (e.target.classList.contains("overlay") || e.target.closest?.('.close-btn'))
       setIsOpen(false);
   };
 

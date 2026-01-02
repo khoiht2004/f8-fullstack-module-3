@@ -12,7 +12,7 @@ import { Separator } from "../ui/separator";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { formatTime } from "@/utils/helper";
-import { useUser } from "@/contexts/UserContext";
+import { useUser } from "@/features/contexts/UserContext";
 import { useSelector } from "react-redux";
 import AuthToastModal from "./AuthToastModal";
 
@@ -22,20 +22,19 @@ function CommentModal({ post, onClick }) {
   const actionStyle = "cursor-pointer p-1.5 text-(--color-time)";
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit thành công");
+    console.log("Bình luận thành công");
   };
 
-  console.log(isAuthenticated);
   return (
     <>
       {isAuthenticated ? (
         // Overlay
         <div
-          className="overlay fixed inset-0 z-100 flex items-center justify-center bg-[#000000b3]"
+          className="overlay animate-fade-in fixed inset-0 z-100 flex items-center justify-center bg-[#000000b3]"
           onClick={onClick}
         >
           {/* Container */}
-          <div className="max-w-155 min-w-130 overflow-auto rounded-2xl bg-(--bg-primary)">
+          <div className="animate-scale-up max-w-155 min-w-130 overflow-auto rounded-2xl bg-(--bg-primary)">
             {/* Header */}
             <header className="flex items-center justify-between px-6 py-5">
               <button

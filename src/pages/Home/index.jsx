@@ -8,8 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import PostLoadingSkeleton from "@/components/Posts/PostLoadingSkeleton";
 import { useSelector } from "react-redux";
+import AddPostModal from "@/components/Modal/AddPostModal";
+import { useAddPostModal } from "@/features/hooks/UseAddPostModal";
 
 function HomePage() {
+  const { isOpen, handleClose, handleOpen } = useAddPostModal();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const { currentData } = useGetUserInfoQuery();
   const { data, isLoading } = useGetFeedQuery({
@@ -35,13 +38,14 @@ function HomePage() {
             </Avatar>
             <p
               className="mx-2 flex-1 pl-1 text-[15px] font-normal text-[#999]"
-              onClick={() => {
-                console.log("Có gì mới...");
-              }}
+              onClick={handleOpen}
             >
               Có gì mới?
             </p>
-            <Button className="border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color)">
+            <Button
+              className="border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color)"
+              onClick={handleOpen}
+            >
               Đăng
             </Button>
           </div>
@@ -61,6 +65,8 @@ function HomePage() {
           )}
         </div>
       </PostSlide>
+
+      {isOpen && <AddPostModal onClick={handleClose} />}
     </>
   );
 }

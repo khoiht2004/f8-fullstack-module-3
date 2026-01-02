@@ -14,48 +14,21 @@ import paths from "@/configs/path";
 import NavMenu from "./NavMenu";
 import { useState } from "react";
 import ThemeModal from "../Theme/ThemeModal";
-
-const styles = {
-  link: {
-    fontSize: "24px",
-    cursor: "pointer",
-  },
-  addPostBtn: {
-    fontSize: "24px",
-    color: "var(--color-icon)",
-    cursor: "pointer",
-    backgroundColor: "var(--bg-icon)",
-  },
-};
-
-const items = [
-  {
-    path: paths.homePage,
-    iconSolid: ["fas", "house"],
-    iconRegular: ["fas", "house"],
-  },
-  {
-    path: paths.searchPage,
-    iconSolid: ["fas", "magnifying-glass"],
-    iconRegular: ["fas", "magnifying-glass"],
-  },
-  { path: null, iconSolid: ["fas", "plus"], iconRegular: ["fas", "plus"] },
-  {
-    path: paths.activityPage,
-    iconSolid: ["fas", "heart"],
-    iconRegular: ["far", "heart"],
-  },
-  {
-    path: paths.profilePage,
-    iconSolid: ["fas", "user"],
-    iconRegular: ["far", "user"],
-  },
-];
+import { useAddPostModal } from "@/features/hooks/UseAddPostModal";
+import AddPostModal from "../Modal/AddPostModal";
 
 function Navigation() {
+  const { isOpen, handleOpen, handleClose } = useAddPostModal();
   const [themeModalOpen, setThemeModalOpen] = useState(false);
 
-  /** Dùng để mở ThemeModal */
+  /** CSS Classes - Tái sử dụng */
+  const navLinkClass =
+    "rounded-[12px] px-3.75 py-2.5 hover:bg-(--bg-icon-hover) max-md:flex max-md:w-full max-md:items-center max-md:justify-center max-md:rounded-xl text-2xl cursor-pointer";
+
+  const addPostBtnClass =
+    "rounded-[12px] px-3.75 py-2.5 max-md:flex max-md:w-full max-md:items-center max-md:justify-center max-md:rounded-xl text-2xl cursor-pointer bg-(--bg-icon) text-(--color-icon)";
+
+  /** Handlers */
   const handleOpenThemeModal = () => {
     setThemeModalOpen(true);
   };
@@ -65,59 +38,128 @@ function Navigation() {
   };
 
   return (
-    <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2">
-      {/* Logo */}
-      <section className="size-15">
-        <NavLink
-          to="/"
-          className="mt-4 mb-6 flex justify-center hover:scale-[1.05]"
-        >
-          <FontAwesomeIcon icon={["fab", "threads"]} size="3x" />
-        </NavLink>
-      </section>
+    <>
+      <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2">
+        {/* Logo */}
+        <section className="size-15">
+          <NavLink
+            to="/"
+            className="mt-4 mb-6 flex justify-center hover:scale-[1.05]"
+          >
+            <FontAwesomeIcon icon={["fab", "threads"]} size="3x" />
+          </NavLink>
+        </section>
 
-      {/* Nav icon */}
-      <section>
-        <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-(--bg-base) max-md:p-1.5">
-          {items.map((item, index) => (
-            <li
-              className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around"
-              key={index}
-            >
+        {/* Nav icon */}
+        <section>
+          <ul className="flex flex-col items-center gap-5 max-md:fixed max-md:right-0 max-md:bottom-0 max-md:left-0 max-md:h-12.5 max-md:flex-row max-md:justify-between max-md:gap-3 max-md:bg-(--bg-base) max-md:p-1.5">
+            {/* Home */}
+            <li className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around">
               <NavLink
-                to={item.path}
+                to={paths.homePage}
+                className={navLinkClass}
                 style={({ isActive }) => ({
-                  ...(item.path ? styles.link : styles.addPostBtn),
                   color: isActive
                     ? "var(--color-icon-active)"
                     : "var(--color-icon)",
                 })}
-                className="rounded-[12px] px-3.75 py-2.5 hover:bg-(--bg-icon-hover) max-md:flex max-md:w-full max-md:items-center max-md:justify-center max-md:rounded-xl"
-                end={item.path === "/"}
+                end
               >
                 {({ isActive }) => (
                   <FontAwesomeIcon
-                    icon={isActive ? item.iconSolid : item.iconRegular}
+                    icon={isActive ? ["fas", "house"] : ["fas", "house"]}
                   />
                 )}
               </NavLink>
             </li>
-          ))}
-        </ul>
-      </section>
 
-      {/* Menu */}
-      <section className="relative text-center">
-        <NavMenu onClick={handleOpenThemeModal}>
-          <FontAwesomeIcon
-            icon={["fas", "bars"]}
-            style={styles.link}
-            className="mb-5 text-(--color-icon) transition ease-in hover:text-(--color-icon-hover)"
-          />
-        </NavMenu>
-        {themeModalOpen && <ThemeModal onClick={handleCloseThemeModal} />}
-      </section>
-    </nav>
+            {/* Search */}
+            <li className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around">
+              <NavLink
+                to={paths.searchPage}
+                className={navLinkClass}
+                style={({ isActive }) => ({
+                  color: isActive
+                    ? "var(--color-icon-active)"
+                    : "var(--color-icon)",
+                })}
+              >
+                {({ isActive }) => (
+                  <FontAwesomeIcon
+                    icon={
+                      isActive
+                        ? ["fas", "magnifying-glass"]
+                        : ["fas", "magnifying-glass"]
+                    }
+                  />
+                )}
+              </NavLink>
+            </li>
+
+            {/* Add Post Button */}
+            <li className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around">
+              <button
+                className={`${addPostBtnClass} hover:text-(--color-icon-hover)`}
+                onClick={handleOpen}
+              >
+                <FontAwesomeIcon icon={["fas", "plus"]} />
+              </button>
+            </li>
+
+            {/* Activity */}
+            <li className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around">
+              <NavLink
+                to={paths.activityPage}
+                className={navLinkClass}
+                style={({ isActive }) => ({
+                  color: isActive
+                    ? "var(--color-icon-active)"
+                    : "var(--color-icon)",
+                })}
+              >
+                {({ isActive }) => (
+                  <FontAwesomeIcon
+                    icon={isActive ? ["fas", "heart"] : ["far", "heart"]}
+                  />
+                )}
+              </NavLink>
+            </li>
+
+            {/* Profile */}
+            <li className="my-1 max-md:flex max-md:flex-1 max-md:items-center max-md:justify-around">
+              <NavLink
+                to={paths.profilePage}
+                className={navLinkClass}
+                style={({ isActive }) => ({
+                  color: isActive
+                    ? "var(--color-icon-active)"
+                    : "var(--color-icon)",
+                })}
+              >
+                {({ isActive }) => (
+                  <FontAwesomeIcon
+                    icon={isActive ? ["fas", "user"] : ["far", "user"]}
+                  />
+                )}
+              </NavLink>
+            </li>
+          </ul>
+        </section>
+
+        {/* Menu */}
+        <section className="relative text-center">
+          <NavMenu onClick={handleOpenThemeModal}>
+            <FontAwesomeIcon
+              icon={["fas", "bars"]}
+              className="mb-5 cursor-pointer text-2xl text-(--color-icon) transition ease-in hover:text-(--color-icon-hover)"
+            />
+          </NavMenu>
+          {themeModalOpen && <ThemeModal onClick={handleCloseThemeModal} />}
+        </section>
+      </nav>
+
+      {isOpen && <AddPostModal onClick={handleClose} />}
+    </>
   );
 }
 
