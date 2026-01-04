@@ -5,7 +5,7 @@ import { registerApi } from '@/services/Auth/registerApi';
 import { userApi } from '@/services/Auth/userApi';
 import { forgotPasswordApi } from '@/services/Auth/forgotPassword';
 import { resetPasswordApi } from '@/services/Auth/resetPassword';
-import { postApi } from '@/services/Home/postApi';
+import { postApi } from '@/services/Posts/postApi';
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +16,7 @@ export const store = configureStore({
         [forgotPasswordApi.reducerPath]: forgotPasswordApi.reducer,
         [resetPasswordApi.reducerPath]: resetPasswordApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
+
     },
     middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(),
     loginApi.middleware,

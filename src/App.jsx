@@ -8,6 +8,7 @@ import ActivityPage from "./pages/Activity";
 import RegisterPage from "./pages/Auth/Register";
 import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
 import ResetPasswordPage from "./pages/Auth/ResetPassword";
+import ProfilePage from "./pages/Profile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path={paths.searchPage} element={<SearchPage />} />
             <Route path={paths.activityPage} element={<ActivityPage />} />
+            <Route path={paths.profilePage} element={<ProfilePage />} />
           </Route>
         </Routes>
       </Router>

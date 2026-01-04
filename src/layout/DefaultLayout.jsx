@@ -34,6 +34,7 @@ import Snowfall from "react-snowfall";
 import { useUser } from "@/features/contexts/UserContext";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { UseCreatePost } from "@/features/hooks/UseCreatePost";
 
 export default function DefaultLayout() {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,10 +114,24 @@ export default function DefaultLayout() {
 function AddPost({ onClick }) {
   const { user } = useUser();
   const actionStyle = "cursor-pointer p-1.5 text-(--color-time)";
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Đăng bài thành công");
-  };
+  const {
+    formData,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    isFormValid,
+    error,
+  } = UseCreatePost({
+    onSuccess: () => {
+      // Đóng modal
+      setTimeout(() => {
+        onClick();
+      }, 300);
+    },
+    onError: (err) => {
+      console.error("Đã xảy ra lỗi: ", err);
+    },
+  });
 
   return (
     <>
@@ -156,12 +171,19 @@ function AddPost({ onClick }) {
                   type="text"
                   placeholder="Thêm chủ đề"
                   className="px-0.5 py-px focus:outline-0"
+                  value={formData.topic_name}
+                  onChange={(e) =>
+                    handleInputChange("topic_name", e.target.value)
+                  }
                 />
               </div>
               <main>
                 <textarea
                   placeholder={`Có gì mới...?`}
                   className="w-full resize-none overflow-hidden focus:outline-0"
+                  disabled={isLoading}
+                  value={formData.content}
+                  onChange={(e) => handleInputChange("content", e.target.value)}
                 ></textarea>
               </main>
               {/* Action */}
@@ -174,6 +196,16 @@ function AddPost({ onClick }) {
               </div>
             </div>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mx-6 mb-4 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
+              <p className="text-sm text-red-500">
+                {error?.data?.message || "Có lỗi xảy ra, vui lòng thử lại"}
+              </p>
+            </div>
+          )}
+
           {/* Modal Footer */}
           <footer className="flex items-center justify-between p-6">
             <div className="flex items-center gap-2 text-(--color-time)">
@@ -183,9 +215,10 @@ function AddPost({ onClick }) {
               </span>
             </div>
             <Button
-              className={`cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-(--text-color)`}
+              className={`cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-(--text-color) select-none`}
+              disabled={!isFormValid || isLoading}
             >
-              Đăng
+              {isLoading ? "Đang đăng..." : "Đăng"}
             </Button>
           </footer>
         </form>
