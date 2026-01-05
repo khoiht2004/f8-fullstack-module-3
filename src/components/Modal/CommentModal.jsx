@@ -36,7 +36,7 @@ function CommentModal({ post, onClick }) {
           {/* Container */}
           <div className="animate-scale-up max-w-155 min-w-130 overflow-auto rounded-2xl bg-(--bg-primary)">
             {/* Header */}
-            <header className="flex items-center justify-between px-6 py-5">
+            <header className="flex items-center justify-between px-6 py-3">
               <button
                 className="close-btn cursor-pointer text-[17px]"
                 onClick={onClick}
@@ -46,7 +46,9 @@ function CommentModal({ post, onClick }) {
               <p className="text-[16px] font-bold">Thread trả lời</p>
               <CircleEllipsis />
             </header>
+
             <Separator className={`bg-(--outline-primary)`} />
+
             <form onSubmit={handleSubmit}>
               {/* Content's post */}
               <div className="flex gap-3 px-6 pt-3">
