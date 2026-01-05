@@ -28,7 +28,15 @@ export const postApi = createApi({
             }),
             invalidatesTags: ['Feed'],
         }),
+        // Like post
+        likePost: builder.mutation({
+            query: (postId) => ({
+                url: `/posts/${postId}/like`,
+                method: "POST",
+            })
+        }),
+        invalidatesTags: ['Feed'],
     }),
 });
 
-export const { useGetFeedQuery, useCreatePostMutation } = postApi;
+export const { useGetFeedQuery, useCreatePostMutation, useLikePostMutation } = postApi;

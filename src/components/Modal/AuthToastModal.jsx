@@ -1,10 +1,13 @@
 import { ChevronRight, Instagram } from "lucide-react";
 import { Link } from "react-router";
 
-function AuthToastModal() {
+function AuthToastModal({ onClick }) {
   return (
     // Overlay
-    <div className="overlay fixed inset-0 z-100 flex items-center justify-center bg-[#000000b3]">
+    <div
+      className="overlay fixed inset-0 z-100 flex items-center justify-center bg-[#000000b3]"
+      onClick={onClick}
+    >
       {/* container */}
       <div className="max-w-130 rounded-2xl bg-(--bg-primary) px-14 pt-12 pb-14 text-center">
         <p className="pb-3 text-[32px] font-extrabold text-balance!">

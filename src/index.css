@@ -195,22 +195,27 @@
 /* width scrollbar */
 *::-webkit-scrollbar {
   width: 7px;
+  height: 7px;
 }
 
 /* track (nền) */
 *::-webkit-scrollbar-track {
-  background: var(--bg-base);
+  background: var(--bg-primary);
 }
 
 /* thumb (thanh kéo) */
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.18);
+  background-color: var(--bg-second);
   border-radius: 999px; /* BO TRÒN */
 }
 
 /* hover cho mượt */
 *::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.28);
+  cursor: grab;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  cursor: grabbing;
 }
 
 /* Fade in animation cho overlay */

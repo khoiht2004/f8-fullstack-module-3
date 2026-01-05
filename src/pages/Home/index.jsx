@@ -43,7 +43,7 @@ function HomePage() {
               Có gì mới?
             </p>
             <Button
-              className="border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color)"
+              className="cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color) active:scale-[0.9]"
               onClick={handleOpen}
             >
               Đăng

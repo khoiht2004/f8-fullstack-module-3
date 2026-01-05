@@ -14,6 +14,7 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "../ui/separator";
 import { useState } from "react";
 import CommentModal from "../Modal/CommentModal";
+import PostInteraction from "./PostInteraction";
 
 /**
  * Hiển thị từng card có nội dung riêng biệt
@@ -22,10 +23,10 @@ import CommentModal from "../Modal/CommentModal";
 function PostCard({ post }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const iconStyles = "size-4.5 text-(--color-user-action-post)";
   const wrapperIcon =
-    "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover)";
-  const statePostCount = "text-[13px] text-(--color-user-action-post)";
+    "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover) select-none";
+  const iconStyles = "size-4.5 ";
+  const statePostCount = "text-[13px] ";
 
   const handleOpen = (e) => {
     e.stopPropagation();
@@ -35,14 +36,18 @@ function PostCard({ post }) {
   const handleClose = (e) => {
     e.stopPropagation();
     // Nếu click vào overlay (bên ngoài modal) hoặc vào nút đóng (hoặc con của nó)
-    if (e.target.classList.contains("overlay") || e.target.closest?.('.close-btn'))
+    if (
+      e.target.classList.contains("overlay") ||
+      e.target.closest?.(".close-btn")
+    )
       setIsOpen(false);
   };
 
+  const { handleLike } = PostInteraction();
   return (
     <>
       <Card
-        className={`flex flex-row rounded-none border-none px-6 py-3`}
+        className={`card flex flex-row overflow-x-auto rounded-none border-none px-6 py-3`}
         data-post-id={post.id}
         data-user-id={post.user_id}
       >
@@ -73,20 +78,27 @@ function PostCard({ post }) {
           {/* Người dùng tương tác */}
           <CardFooter className={`px-0 pt-1`}>
             {/* Số lượng lượt thích */}
-            <div className={`${wrapperIcon}`}>
-              <Heart className={`${iconStyles}`} />
+            <div
+              className={`like ${wrapperIcon} ${post.is_liked_by_auth ? "text-red-500" : "text-(--color-user-action-post)"}`}
+              data-post-id={post.id}
+              onClick={handleLike}
+            >
+              <Heart className={`${iconStyles} `} />
               <span className={`${statePostCount}`}>
                 {post.likes_count === 0 ? "" : post.likes_count}
               </span>
             </div>
             {/* Số lượng bình luận */}
-            <div className={`${wrapperIcon}`} onClick={handleOpen}>
+            <div
+              className={`${wrapperIcon} text-(--color-user-action-post)`}
+              onClick={handleOpen}
+            >
               <MessageCircle className={`${iconStyles}`} />
               <span className={`${statePostCount}`}>
                 {post.replies_count === 0 ? "" : post.replies_count}
               </span>
             </div>
-            <div className={`${wrapperIcon}`}>
+            <div className={`${wrapperIcon} text-(--color-user-action-post)`}>
               {/* Số lượng đăng lại */}
               <Repeat className={`${iconStyles}`} />
               <span className={`${statePostCount}`}>
@@ -96,7 +108,7 @@ function PostCard({ post }) {
               </span>
             </div>
             {/* Số lượng chia sẻ */}
-            <div className={`${wrapperIcon}`}>
+            <div className={`${wrapperIcon} text-(--color-user-action-post)`}>
               <Send className={`${iconStyles} rotate-20`} />
               <span className={`${statePostCount}`}>
                 {post.reposts_and_quotes_count === 0
