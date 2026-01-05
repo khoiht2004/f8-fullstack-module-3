@@ -47,7 +47,7 @@ function PostCard({ post }) {
   return (
     <>
       <Card
-        className={`card flex flex-row overflow-x-auto rounded-none border-none px-6 py-3`}
+        className={`card relative flex flex-row overflow-x-auto rounded-none border-none px-6 py-3`}
         data-post-id={post.id}
         data-user-id={post.user_id}
       >
@@ -60,20 +60,22 @@ function PostCard({ post }) {
 
         {/* Tên người dùng, Thời gian up bài, dấu ... */}
         <div className="flex-1">
-          <CardHeader className={`flex items-center px-0`}>
+          <CardHeader className={`flex items-center px-0 pb-2`}>
             <CardTitle>{post?.user?.username}</CardTitle>
             <CardDescription className={`flex-1 text-(--color-time)`}>
               {formatTime(post.created_at)}
             </CardDescription>
-            <CardAction>
+            <CardAction className={`absolute top-[2.4%] right-[3%]`}>
               <Ellipsis className="size-8 cursor-pointer rounded-full p-2 text-(--color-icon) hover:bg-(--bg-icon-hover)" />
             </CardAction>
           </CardHeader>
 
-          {/* Nội dung chính của post */}
-          <CardContent className={`px-0`}>
-            <p>{post.content}</p>
-          </CardContent>
+          <div>
+            {/* Nội dung chính của post */}
+            <CardContent className={`px-0`}>
+              <p>{post.content}</p>
+            </CardContent>
+          </div>
 
           {/* Người dùng tương tác */}
           <CardFooter className={`px-0 pt-1`}>

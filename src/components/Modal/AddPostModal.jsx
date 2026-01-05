@@ -65,7 +65,9 @@ function AddPostModal({ onClick }) {
                 <CircleEllipsis size={34} className="p-1.5" />
               </div>
             </header>
+
             <Separator className={`bg-(--outline-primary)`} />
+
             <form onSubmit={handleSubmit}>
               {/* Content Post */}
               <div className="flex gap-3 px-6 pt-4 pb-1.25">
@@ -91,14 +93,17 @@ function AddPostModal({ onClick }) {
                   </div>
                   <main>
                     <textarea
-                      placeholder={`Có gì mới...?`}
+                      placeholder="Có gì mới...?"
                       className="w-full resize-none overflow-hidden focus:outline-0"
                       disabled={isLoading}
                       value={formData.content}
-                      onChange={(e) =>
-                        handleInputChange("content", e.target.value)
-                      }
-                    ></textarea>
+                      onChange={(e) => {
+                        handleInputChange("content", e.target.value);
+
+                        e.target.style.height = "auto";
+                        e.target.style.height = `${e.target.scrollHeight}px`;
+                      }}
+                    />
                   </main>
                   {/* Action */}
                   <div className="flex gap-1.5">
@@ -110,7 +115,6 @@ function AddPostModal({ onClick }) {
                   </div>
                 </div>
               </div>
-
               {/* Error Message */}
               {error && (
                 <div className="mx-6 mb-4 rounded-lg border border-red-500/20 bg-red-500/10 p-3">

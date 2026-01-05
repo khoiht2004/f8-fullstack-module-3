@@ -78,7 +78,7 @@ export function UseCreatePost(options = {}) {
             if (e) e.preventDefault();
 
             if (!isFormValid || isLoading) {
-                console.warn("⚠️ Form không hợp lệ hoặc đang submit");
+                console.warn("Form không hợp lệ hoặc đang submit");
                 return;
             }
 
@@ -93,16 +93,16 @@ export function UseCreatePost(options = {}) {
                     postData.topic_name = formData.topic_name.trim();
                 }
 
-                console.log("📤 Gửi data:", postData);
+                console.log("Gửi data:", postData);
 
                 // Gọi API
                 const response = await createPost(postData).unwrap();
 
-                console.log("✅ Đăng bài thành công:", response);
+                console.log("Đăng bài thành công:", response);
 
                 return response;
             } catch (err) {
-                console.error("❌ Lỗi khi đăng bài:", {
+                console.error("Lỗi khi đăng bài:", {
                     status: err.status,
                     data: err.data,
                     message: err.data?.message,
