@@ -26,7 +26,7 @@ function PostCard({ post }) {
   const wrapperIcon =
     "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover) select-none";
   const iconStyles = "size-4.5 ";
-  const statePostCount = "text-[13px] ";
+  const statePostCount = "text-[13px] font-semibold";
 
   const handleOpen = (e) => {
     e.stopPropagation();
@@ -81,7 +81,7 @@ function PostCard({ post }) {
           <CardFooter className={`px-0 pt-1`}>
             {/* Số lượng lượt thích */}
             <div
-              className={`like ${wrapperIcon} ${post.is_liked_by_auth ? "text-red-500" : "text-(--color-user-action-post)"}`}
+              className={`like transition-colors duration-300 ${wrapperIcon} ${post.is_liked_by_auth ? "text-red-500" : "text-(--color-user-action-post)"}`}
               data-post-id={post.id}
               onClick={handleLike}
             >
