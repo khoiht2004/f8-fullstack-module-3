@@ -36,7 +36,16 @@ function PostCard({ post }) {
   };
 
   const handleClose = (e) => {
-    e.stopPropagation();
+    e?.stopPropagation();
+
+    // Nếu không có event thì đóng luôn
+    if (!e) {
+      localStorage.removeItem("postId");
+      setIsOpen(false);
+      return;
+    }
+
+    // Nếu có event thì check điều kiện 
     if (
       e.target.classList.contains("overlay") ||
       e.target.closest?.(".close-btn")
@@ -44,12 +53,6 @@ function PostCard({ post }) {
       localStorage.removeItem("postId");
       setIsOpen(false);
     }
-  };
-
-  // Hàm đóng modal từ bên trong (không cần event)
-  const handleCloseModal = () => {
-    localStorage.removeItem("postId");
-    setIsOpen(false);
   };
 
   const { handleLike } = PostInteraction();
@@ -134,13 +137,7 @@ function PostCard({ post }) {
 
       <Separator className={`bg-(--outline-primary)`} />
 
-      {isOpen && (
-        <CommentModal
-          post={post}
-          onClick={handleClose}
-          onClose={handleCloseModal}
-        />
-      )}
+      {isOpen && <CommentModal post={post} onClick={handleClose} />}
     </>
   );
 }

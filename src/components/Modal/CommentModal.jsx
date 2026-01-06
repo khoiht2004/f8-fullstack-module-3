@@ -18,7 +18,7 @@ import AuthToastModal from "./AuthToastModal";
 import { useEffect } from "react";
 import { useReplyPost } from "@/features/hooks/UseReplyPost";
 
-function CommentModal({ post, onClick, onClose }) {
+function CommentModal({ post, onClick }) {
   const { user } = useUser();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const actionStyle = "cursor-pointer p-1.5 text-(--color-time)";
@@ -34,15 +34,14 @@ function CommentModal({ post, onClick, onClose }) {
     resetForm,
   } = useReplyPost();
 
-  // Tự động đóng modal và reset form khi reply thành công
+  // Tự động đóng modal và reset form
   useEffect(() => {
     if (isSuccess) {
       resetForm();
-      onClose?.(); // Gọi onClose nếu có
+      onClick();
     }
-  }, [isSuccess, onClose, resetForm]);
+  }, [isSuccess, onClick, resetForm]);
 
-  // Wrapper function để truyền postId vào handleSubmit
   const onSubmit = (e) => {
     const postId = localStorage.getItem("postId");
     handleSubmit(e, postId);
