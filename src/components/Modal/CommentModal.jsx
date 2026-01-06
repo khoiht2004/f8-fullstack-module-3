@@ -15,14 +15,37 @@ import { formatTime } from "@/utils/helper";
 import { useUser } from "@/features/contexts/UserContext";
 import { useSelector } from "react-redux";
 import AuthToastModal from "./AuthToastModal";
+import { useEffect } from "react";
+import { useReplyPost } from "@/features/hooks/UseReplyPost";
 
-function CommentModal({ post, onClick }) {
+function CommentModal({ post, onClick, onClose }) {
   const { user } = useUser();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const actionStyle = "cursor-pointer p-1.5 text-(--color-time)";
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Bình luận thành công");
+
+  const {
+    formData,
+    isFormValid,
+    isLoading,
+    error,
+    isSuccess,
+    handleInputChange,
+    handleSubmit,
+    resetForm,
+  } = useReplyPost();
+
+  // Tự động đóng modal và reset form khi reply thành công
+  useEffect(() => {
+    if (isSuccess) {
+      resetForm();
+      onClose?.(); // Gọi onClose nếu có
+    }
+  }, [isSuccess, onClose, resetForm]);
+
+  // Wrapper function để truyền postId vào handleSubmit
+  const onSubmit = (e) => {
+    const postId = localStorage.getItem("postId");
+    handleSubmit(e, postId);
   };
 
   return (
@@ -49,7 +72,7 @@ function CommentModal({ post, onClick }) {
 
             <Separator className={`bg-(--outline-primary)`} />
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
               {/* Content's post */}
               <div className="flex gap-3 px-6 pt-3">
                 <Avatar className={`size-9`}>
@@ -83,12 +106,23 @@ function CommentModal({ post, onClick }) {
                     <input
                       type="text"
                       placeholder="Thêm chủ đề"
+                      value={formData.topic_name}
+                      onChange={(e) =>
+                        handleInputChange("topic_name", e.target.value)
+                      }
                       className="px-0.5 py-px focus:outline-0"
                     />
                   </div>
                   <main>
                     <textarea
                       placeholder={`Trả lời ${post?.user.username}...`}
+                      value={formData.content}
+                      onChange={(e) => {
+                        handleInputChange("content", e.target.value);
+
+                        e.target.style.height = "auto";
+                        e.target.style.height = `${e.target.scrollHeight}px`;
+                      }}
                       className="w-full resize-none overflow-hidden focus:outline-0"
                     ></textarea>
                   </main>
@@ -102,6 +136,16 @@ function CommentModal({ post, onClick }) {
                   </div>
                 </div>
               </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="mx-6 mb-4 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
+                  <p className="text-sm text-red-500">
+                    {error?.data?.message || "Có lỗi xảy ra, vui lòng thử lại"}
+                  </p>
+                </div>
+              )}
+
               {/* Modal Footer */}
               <footer className="flex items-center justify-between p-6">
                 <div className="flex items-center gap-2 text-(--color-time)">
@@ -112,6 +156,7 @@ function CommentModal({ post, onClick }) {
                 </div>
                 <Button
                   className={`cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-(--text-color)`}
+                  disabled={!isFormValid || isLoading}
                 >
                   Đăng
                 </Button>

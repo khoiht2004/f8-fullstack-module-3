@@ -43,15 +43,6 @@ function PostInteraction() {
         countSpan.textContent = data.likes_count === 0 ? "" : data.likes_count;
       } catch (error) {
         console.error("Failed to like/unlike post:", error);
-
-        // if (wasLiked) {
-        //   likeElement.classList.add("fill-red-500", "text-red-500");
-        //   likeElement.classList.remove("text-(--color-user-action-post)");
-        // } else {
-        //   likeElement.classList.remove("fill-red-500", "text-red-500");
-        //   likeElement.classList.add("text-(--color-user-action-post)");
-        // }
-        // countSpan.textContent = currentCount === 0 ? "" : currentCount;
       }
     },
     [likePost],

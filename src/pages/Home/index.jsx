@@ -26,33 +26,35 @@ function HomePage() {
       <Header title="Dành cho bạn" />
       <PostSlide>
         {isAuthenticated && (
-          <div className="flex items-center px-6 py-4">
-            <Avatar className="size-9">
-              <AvatarImage
-                src={
-                  currentData?.data.avatar_url || "/img/placeholder_avatar.jpg"
-                }
-                alt={`Ảnh đại diện của ${currentData?.data.name}`}
-                className="size-full object-cover"
-              />
-            </Avatar>
-            <p
-              className="mx-2 flex-1 pl-1 text-[15px] font-normal text-[#999]"
-              onClick={handleOpen}
-            >
-              Có gì mới?
-            </p>
-            <Button
-              className="cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color) active:scale-[0.9]"
-              onClick={handleOpen}
-            >
-              Đăng
-            </Button>
-          </div>
+          <>
+            <div className="flex items-center px-6 py-4">
+              <Avatar className="size-9">
+                <AvatarImage
+                  src={
+                    currentData?.data.avatar_url ||
+                    "/img/placeholder_avatar.jpg"
+                  }
+                  alt={`Ảnh đại diện của ${currentData?.data.name}`}
+                  className="size-full object-cover"
+                />
+              </Avatar>
+              <p
+                className="mx-2 flex-1 pl-1 text-[15px] font-normal text-[#999]"
+                onClick={handleOpen}
+              >
+                Có gì mới?
+              </p>
+              <Button
+                className="cursor-pointer border border-(--outline-primary) bg-(--bg-primary) px-4 text-[15px] text-(--text-color) active:scale-[0.9]"
+                onClick={handleOpen}
+              >
+                Đăng
+              </Button>
+            </div>
+            <Separator className="bg-(--outline-primary)" />
+          </>
         )}
-
-        <Separator className="bg-(--outline-primary)" />
-
+        {/* Posts... */}
         <div>
           {isLoading ? (
             <PostLoadingSkeleton count={7} />

@@ -24,8 +24,8 @@ function LoginPage() {
   const text = "text-[15px] text-[#777777]";
   const hoverFooter = "transition hover:underline";
 
-  const [isFormValid, setIsFormValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",

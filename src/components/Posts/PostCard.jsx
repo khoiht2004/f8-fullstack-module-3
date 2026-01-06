@@ -30,17 +30,26 @@ function PostCard({ post }) {
 
   const handleOpen = (e) => {
     e.stopPropagation();
+    const postId = e.currentTarget.dataset.postId;
+    localStorage.setItem("postId", postId);
     setIsOpen(true);
   };
 
   const handleClose = (e) => {
     e.stopPropagation();
-    // Nếu click vào overlay (bên ngoài modal) hoặc vào nút đóng (hoặc con của nó)
     if (
       e.target.classList.contains("overlay") ||
       e.target.closest?.(".close-btn")
-    )
+    ) {
+      localStorage.removeItem("postId");
       setIsOpen(false);
+    }
+  };
+
+  // Hàm đóng modal từ bên trong (không cần event)
+  const handleCloseModal = () => {
+    localStorage.removeItem("postId");
+    setIsOpen(false);
   };
 
   const { handleLike } = PostInteraction();
@@ -93,6 +102,7 @@ function PostCard({ post }) {
             {/* Số lượng bình luận */}
             <div
               className={`${wrapperIcon} text-(--color-user-action-post)`}
+              data-post-id={post.id}
               onClick={handleOpen}
             >
               <MessageCircle className={`${iconStyles}`} />
@@ -124,7 +134,13 @@ function PostCard({ post }) {
 
       <Separator className={`bg-(--outline-primary)`} />
 
-      {isOpen && <CommentModal post={post} onClick={handleClose} />}
+      {isOpen && (
+        <CommentModal
+          post={post}
+          onClick={handleClose}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 }
