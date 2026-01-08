@@ -7,7 +7,6 @@ function PostSlide({ children }) {
         {/* Nội dung bên trong thay đổi */}
         {children}
       </main>
-      {/*  */}
     </>
   );
 }

@@ -13,9 +13,9 @@ import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "../ui/separator";
 import { useNavigate } from "react-router";
-import CommentModal from "../Modal/ReplyModal";
 import PostInteraction from "./PostInteraction";
-import useCommentModal from "@/features/hooks/useCommentModal";
+import ReplyModal from "./ReplyModal";
+import useReplyModal from "@/features/hooks/useReplyModal";
 
 /**
  * Hiển thị từng card có nội dung riêng biệt
@@ -23,7 +23,7 @@ import useCommentModal from "@/features/hooks/useCommentModal";
  * */
 function PostCard({ post }) {
   const navigate = useNavigate();
-  const { isOpen, handleOpen, handleClose } = useCommentModal();
+  const { isOpen, handleOpen, handleClose } = useReplyModal();
   const { handleLike } = PostInteraction();
 
   const wrapperIcon =
@@ -120,7 +120,7 @@ function PostCard({ post }) {
 
       <Separator className={`bg-(--outline-primary)`} />
 
-      {isOpen && <CommentModal post={post} onClick={handleClose} />}
+      {isOpen && <ReplyModal post={post} onClick={handleClose} />}
     </>
   );
 }

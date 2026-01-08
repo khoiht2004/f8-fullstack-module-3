@@ -3,12 +3,10 @@ import {
   useGetPostByIdQuery,
   useGetRepliesQuery,
 } from "@/services/Posts/postApi";
-import PostSlide from "@/components/post/PostSlide";
-import PostCard from "@/components/post/PostCard";
-import PostLoadingSkeleton from "@/components/post/PostLoadingSkeleton";
+import PostSlide from "@/components/Post/PostSlide";
+import PostCard from "@/components/Post/PostCard";
+import PostLoadingSkeleton from "@/components/Post/PostLoadingSkeleton";
 import Header from "@/components/Header";
-import useCommentModal from "@/features/hooks/useCommentModal";
-import CommentModal from "@/components/Modal/ReplyModal";
 import { formatTime } from "@/utils/helper";
 import {
   Card,
@@ -29,18 +27,20 @@ import {
   Repeat,
   Send,
 } from "lucide-react";
-import PostInteraction from "@/components/post/PostInteraction";
+import PostInteraction from "@/components/Post/PostInteraction";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import useReplyModal from "@/features/hooks/useReplyModal";
+import ReplyModal from "@/components/Post/ReplyModal";
 
 function PostDetail() {
   const { id } = useParams();
   const { handleLike } = PostInteraction();
-  const { isOpen, handleOpen, handleClose } = useCommentModal();
+  const { isOpen, handleOpen, handleClose } = useReplyModal();
   const { isLoading, error, data: response } = useGetPostByIdQuery(id);
   const post = response?.data;
   const { data } = useGetRepliesQuery(id);
-  console.log(data);
+  console.log(post);
 
   const wrapperIcon =
     "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover) select-none";
@@ -174,7 +174,6 @@ function PostDetail() {
         </Card>
 
         <Separator />
-        {/* <Card className={`h-dvh cursor-pointer overflow-x-auto rounded-none border-none`}></Card> */}
         {/* Phần comment của chính bài post đó */}
         <div className={`h-dvh`}>
           {isLoading ? (
@@ -187,7 +186,7 @@ function PostDetail() {
             ))
           )}
         </div>
-        {isOpen && post && <CommentModal post={post} onClick={handleClose} />}
+        {isOpen && post && <ReplyModal post={post} onClick={handleClose} />}
       </PostSlide>
     </div>
   );

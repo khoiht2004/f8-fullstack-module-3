@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 /**
- * Custom hook để quản lý trạng thái đóng/mở CommentModal
+ * Custom hook để quản lý trạng thái đóng/mở ReplyModal
  * @returns {Object} - { isOpen, handleOpen, handleClose }
  */
-function useCommentModal() {
+function useReplyModal() {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = (e) => {
@@ -37,4 +37,4 @@ function useCommentModal() {
     return { isOpen, handleOpen, handleClose };
 }
 
-export default useCommentModal;
+export default useReplyModal;

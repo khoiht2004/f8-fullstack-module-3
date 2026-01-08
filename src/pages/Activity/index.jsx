@@ -1,4 +1,4 @@
-import PostSlide from "@/components/post/PostSlide";
+import PostSlide from "@/components/Post/PostSlide";
 
 function ActivityPage() {
   return (
