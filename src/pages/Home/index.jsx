@@ -1,11 +1,11 @@
 import Header from "@/components/Header";
-import PostSlide from "@/components/Posts/PostSlide";
-import PostCard from "@/components/Posts/PostCard";
+import PostSlide from "@/components/post/PostSlide";
+import PostCard from "@/components/post/PostCard";
 import { useGetUserInfoQuery } from "@/services/Auth/userApi";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import PostLoadingSkeleton from "@/components/Posts/PostLoadingSkeleton";
+import PostLoadingSkeleton from "@/components/post/PostLoadingSkeleton";
 import { useSelector } from "react-redux";
 import AddPostModal from "@/components/Modal/AddPostModal";
 import { useAddPostModal } from "@/features/hooks/UseAddPostModal";

@@ -13,7 +13,7 @@ import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "../ui/separator";
 import { useNavigate } from "react-router";
-import CommentModal from "../Modal/CommentModal";
+import CommentModal from "../Modal/ReplyModal";
 import PostInteraction from "./PostInteraction";
 import useCommentModal from "@/features/hooks/useCommentModal";
 

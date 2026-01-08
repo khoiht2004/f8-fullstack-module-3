@@ -3,12 +3,12 @@ import {
   useGetPostByIdQuery,
   useGetRepliesQuery,
 } from "@/services/Posts/postApi";
-import PostSlide from "@/components/Posts/PostSlide";
-import PostCard from "@/components/Posts/PostCard";
-import PostLoadingSkeleton from "@/components/Posts/PostLoadingSkeleton";
+import PostSlide from "@/components/post/PostSlide";
+import PostCard from "@/components/post/PostCard";
+import PostLoadingSkeleton from "@/components/post/PostLoadingSkeleton";
 import Header from "@/components/Header";
 import useCommentModal from "@/features/hooks/useCommentModal";
-import CommentModal from "@/components/Modal/CommentModal";
+import CommentModal from "@/components/Modal/ReplyModal";
 import { formatTime } from "@/utils/helper";
 import {
   Card,
@@ -29,7 +29,7 @@ import {
   Repeat,
   Send,
 } from "lucide-react";
-import PostInteraction from "@/components/Posts/PostInteraction";
+import PostInteraction from "@/components/post/PostInteraction";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 
