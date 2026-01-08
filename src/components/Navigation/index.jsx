@@ -39,7 +39,7 @@ function Navigation() {
 
   return (
     <>
-      <nav className="fixed top-0 bottom-0 left-0 flex min-w-17.5 flex-col justify-between px-2">
+      <nav className="fixed top-0 bottom-0 left-0 z-50 flex min-w-17.5 flex-col justify-between px-2">
         {/* Logo */}
         <section className="size-15">
           <NavLink

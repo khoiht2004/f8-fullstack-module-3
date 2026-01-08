@@ -9,6 +9,7 @@ import RegisterPage from "./pages/Auth/Register";
 import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
 import ResetPasswordPage from "./pages/Auth/ResetPassword";
 import ProfilePage from "./pages/Profile";
+import PostDetail from "./pages/Post/PostDetail";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             <Route path={paths.searchPage} element={<SearchPage />} />
             <Route path={paths.activityPage} element={<ActivityPage />} />
             <Route path={paths.profilePage} element={<ProfilePage />} />
+
+            {/* More pages */}
+            <Route path={paths.postDetail} element={<PostDetail />} />
           </Route>
         </Routes>
       </Router>

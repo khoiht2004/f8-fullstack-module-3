@@ -11,6 +11,8 @@ const paths = {
     profilePage: "/profile-page",
     followingPage: "/following",
     ghostPost: "/ghost-post",
+    // More pages
+    postDetail: "/:username/post/:id",
 }
 
 export default paths;

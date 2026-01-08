@@ -12,56 +12,39 @@ import { Ellipsis, Heart, MessageCircle, Repeat, Send } from "lucide-react";
 import { Avatar } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Separator } from "../ui/separator";
-import { useState } from "react";
+import { useNavigate } from "react-router";
 import CommentModal from "../Modal/CommentModal";
 import PostInteraction from "./PostInteraction";
+import useCommentModal from "@/features/hooks/useCommentModal";
 
 /**
  * Hiển thị từng card có nội dung riêng biệt
  * Lặp qua PostCard -> render vào children của PostSlide trong các trang khác
  * */
 function PostCard({ post }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { isOpen, handleOpen, handleClose } = useCommentModal();
+  const { handleLike } = PostInteraction();
 
   const wrapperIcon =
     "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover) select-none";
   const iconStyles = "size-4.5 ";
   const statePostCount = "text-[13px] font-semibold";
 
-  const handleOpen = (e) => {
+  const handleCardClick = (e) => {
     e.stopPropagation();
-    const postId = e.currentTarget.dataset.postId;
-    localStorage.setItem("postId", postId);
-    setIsOpen(true);
+    const username = post.user.username;
+    const postId = post.id;
+    navigate(`/${username}/post/${postId}`);
   };
 
-  const handleClose = (e) => {
-    e?.stopPropagation();
-
-    // Nếu không có event thì đóng luôn
-    if (!e) {
-      localStorage.removeItem("postId");
-      setIsOpen(false);
-      return;
-    }
-
-    // Nếu có event thì check điều kiện 
-    if (
-      e.target.classList.contains("overlay") ||
-      e.target.closest?.(".close-btn")
-    ) {
-      localStorage.removeItem("postId");
-      setIsOpen(false);
-    }
-  };
-
-  const { handleLike } = PostInteraction();
   return (
     <>
       <Card
-        className={`card relative flex flex-row overflow-x-auto rounded-none border-none px-6 py-3`}
+        className={`card relative flex cursor-pointer flex-row overflow-x-auto rounded-none border-none px-6 py-3`}
         data-post-id={post.id}
         data-user-id={post.user_id}
+        onClick={handleCardClick}
       >
         <Avatar className={`size-9`}>
           <AvatarImage
@@ -90,7 +73,7 @@ function PostCard({ post }) {
           </div>
 
           {/* Người dùng tương tác */}
-          <CardFooter className={`px-0 pt-1`}>
+          <CardFooter className={`-ml-3 px-0 pt-1`}>
             {/* Số lượng lượt thích */}
             <div
               className={`like transition-colors duration-300 ${wrapperIcon} ${post.is_liked_by_auth ? "text-red-500" : "text-(--color-user-action-post)"}`}

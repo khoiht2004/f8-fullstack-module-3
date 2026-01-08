@@ -1,6 +1,6 @@
 import { Ellipsis } from "lucide-react";
 
-function Header({ title }) {
+function Header({ title, children = "" }) {
   const boxStyles =
     "absolute top-[35px] size-[50px] overflow-hidden bg-transparent";
   const cornerStyles =
@@ -9,9 +9,10 @@ function Header({ title }) {
   return (
     <header className="fixed top-0 z-10 h-15 w-160 bg-(--bg-base)">
       {/* Title */}
-      <div className="sticky flex w-full items-center justify-center">
+      <div className="sticky flex max-h-full w-full items-center justify-center">
         <h1 className="my-4 text-lg font-semibold">{title}</h1>
         <Ellipsis className="absolute right-[5%] size-5.5 cursor-pointer rounded-full bg-(--bg-primary) p-1 outline outline-(--outline-primary) hover:scale-[1.04]" />
+        {children}
       </div>
 
       {/* box box-left */}

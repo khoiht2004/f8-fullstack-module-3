@@ -11,7 +11,7 @@ function LoginPanel() {
       {/* Button */}
       <Button
         variant="secondary"
-        className="fixed top-[3%] right-[3%] hidden cursor-pointer bg-(--foreground) text-(--background) hover:bg-(--foreground) max-xl:block"
+        className="fixed top-[3%] right-[3%] z-10 hidden cursor-pointer bg-(--foreground) text-(--background) hover:bg-(--foreground) max-xl:block"
         onClick={() => navigation("/login")} // Chuyển hướng về trang login
       >
         Đăng nhập

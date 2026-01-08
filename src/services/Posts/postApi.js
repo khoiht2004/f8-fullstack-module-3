@@ -10,7 +10,6 @@ export const postApi = createApi({
         getFeed: builder.query({
             query: ({ type = "for_you", page = 1, per_page = 10 } = {}) => ({
                 url: "/posts/feed",
-                method: "GET",
                 params: {
                     type,
                     page,
@@ -44,8 +43,22 @@ export const postApi = createApi({
                 body: postData,
             }),
             invalidatesTags: ['Feed'],
-        })
+        }),
+        // Get post by ID
+        getPostById: builder.query({
+            query: (postId) => ({
+                url: `/posts/${postId}`,
+            }),
+            providesTags: ['Post'],
+        }),
+        // Lấy ra comment của post đó 
+        getReplies: builder.query({
+            query: (postId) => ({
+                url: `/posts/${postId}/replies`
+            })
+        }),
+        providesTags: ['Post'],
     }),
 });
 
-export const { useGetFeedQuery, useCreatePostMutation, useLikePostMutation, useReplyPostMutation } = postApi;
+export const { useGetFeedQuery, useGetRepliesQuery, useCreatePostMutation, useLikePostMutation, useReplyPostMutation, useGetPostByIdQuery } = postApi;
