@@ -6,7 +6,7 @@ export const postApi = createApi({
     baseQuery,
     tagTypes: ['Post', 'Feed'],
     endpoints: (builder) => ({
-        // Lấy feed
+        // Lấy feed với infinite scroll support
         getFeed: builder.query({
             query: ({ type = "for_you", page = 1, per_page = 10 } = {}) => ({
                 url: "/posts/feed",
@@ -16,6 +16,26 @@ export const postApi = createApi({
                     per_page,
                 },
             }),
+            // Serialize query args để cache theo type (không theo page)
+            serializeQueryArgs: ({ queryArgs }) => {
+                return queryArgs?.type || "for_you";
+            },
+            // Merge data mới với data cũ
+            merge: (currentCache, newItems, { arg }) => {
+                if (arg?.page === 1) {
+                    // Reset khi load trang đầu
+                    return newItems;
+                }
+                // Merge posts từ trang mới vào cache
+                return {
+                    ...newItems,
+                    data: [...(currentCache?.data || []), ...(newItems?.data || [])],
+                };
+            },
+            // Force refetch khi page thay đổi
+            forceRefetch: ({ currentArg, previousArg }) => {
+                return currentArg?.page !== previousArg?.page;
+            },
             providesTags: ['Feed'],
         }),
         // Tạo post

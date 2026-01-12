@@ -10,11 +10,13 @@ import ForgotPasswordPage from "./pages/Auth/ForgotPassword";
 import ResetPasswordPage from "./pages/Auth/ResetPassword";
 import ProfilePage from "./pages/Profile";
 import PostDetail from "./pages/Post/PostDetail";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* No Layout */}
           <Route path={paths.login} element={<LoginPage />} />

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { formatTime } from "@/utils/helper";
 import {
   Card,
@@ -125,4 +126,4 @@ function PostCard({ post }) {
   );
 }
 
-export default PostCard;
+export default memo(PostCard);
