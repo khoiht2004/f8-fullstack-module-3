@@ -30,7 +30,7 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import useReplyModal from "@/features/hooks/useReplyModal";
-import ReplyModal from "@/components/Post/ReplyModal";
+import ReplyModal from "@/components/Post/ReplyModal.jsx";
 import PostInteraction from "@/components/Post/PostInteraction";
 
 function PostDetail() {
