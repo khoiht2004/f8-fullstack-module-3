@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Header from "@/components/Header";
-import PostSlide from "@/components/Post/PostSlide";
+import PostSlide from "@/components/Post/PostSlide.jsx";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useUser } from "@/features/contexts/UserContext";

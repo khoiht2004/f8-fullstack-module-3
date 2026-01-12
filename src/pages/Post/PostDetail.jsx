@@ -3,9 +3,9 @@ import {
   useGetPostByIdQuery,
   useGetRepliesQuery,
 } from "@/services/Posts/postApi";
-import PostSlide from "@/components/Post/PostSlide";
-import PostCard from "@/components/Post/PostCard";
-import PostLoadingSkeleton from "@/components/Post/PostLoadingSkeleton";
+import PostSlide from "@/components/Post/PostSlide.jsx";
+import PostCard from "@/components/Post/PostCard.jsx";
+import PostLoadingSkeleton from "@/components/Post/PostLoadingSkeleton.jsx";
 import Header from "@/components/Header";
 import { formatTime } from "@/utils/helper";
 import {
@@ -31,7 +31,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import useReplyModal from "@/features/hooks/useReplyModal";
 import ReplyModal from "@/components/Post/ReplyModal.jsx";
-import PostInteraction from "@/components/Post/PostInteraction";
+import PostInteraction from "@/components/Post/PostInteraction.jsx";
 
 function PostDetail() {
   const { id } = useParams();

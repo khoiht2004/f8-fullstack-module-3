@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import PostSlide from "@/components/Post/PostSlide";
+import PostSlide from "@/components/Post/PostSlide.jsx";
 
 function SearchPage() {
   return (
