@@ -40,7 +40,6 @@ function PostDetail() {
   const { isLoading, error, data: response } = useGetPostByIdQuery(id);
   const post = response?.data;
   const { data } = useGetRepliesQuery(id);
-  console.log(post);
 
   const wrapperIcon =
     "flex cursor-pointer items-center gap-1 rounded-2xl px-3 py-1.5 hover:bg-(--bg-icon-hover) select-none";
