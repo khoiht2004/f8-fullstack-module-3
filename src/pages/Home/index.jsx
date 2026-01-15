@@ -9,9 +9,9 @@ import AddPostModal from "@/components/Modal/AddPostModal";
 import { useAddPostModal } from "@/features/hooks/UseAddPostModal";
 import { useGetFeedQuery } from "@/services/Posts/postApi";
 import { useInfiniteScroll } from "@/features/hooks/useInfiniteScroll";
-import PostSlide from "@/components/post/PostSlide.jsx";
-import PostCard from "@/components/post/PostCard.jsx";
-import PostLoadingSkeleton from "@/components/post/PostLoadingSkeleton.jsx";
+import PostSlide from "@/components/Post/PostSlide.jsx";
+import PostCard from "@/components/Post/PostCard.jsx";
+import PostLoadingSkeleton from "@/components/Post/PostLoadingSkeleton.jsx";
 
 const PER_PAGE = 10;
 const STORAGE_KEY = "homePage_state";
